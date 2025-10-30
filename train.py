@@ -1,0 +1,445 @@
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import DataLoader
+from torchvision import datasets, transforms
+from torch.cuda.amp import GradScaler, autocast
+import os
+import time
+import numpy as np
+import random
+import json
+import csv
+from tqdm import tqdm
+from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, classification_report, precision_score, recall_score
+
+# Import custom model
+from models.soilnetgraph import SoilNetHybrid, build_soilnet_hybrid
+
+# Set random seed for reproducibility
+def set_seed(seed=42):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+
+# Time tracking utility for performance monitoring
+class TimeTracker:
+    def __init__(self):
+        self.epoch_times = []
+        self.batch_times = []
+        self.epoch_start = None
+        self.batch_start = None
+    
+    def start_epoch(self):
+        self.epoch_start = time.time()
+    
+    def end_epoch(self):
+        epoch_time = time.time() - self.epoch_start
+        self.epoch_times.append(epoch_time)
+        return epoch_time
+    
+    def start_batch(self):
+        self.batch_start = time.time()
+    
+    def end_batch(self):
+        batch_time = time.time() - self.batch_start
+        self.batch_times.append(batch_time)
+        return batch_time
+    
+    def get_stats(self):
+        return {
+            'total_epoch_time': sum(self.epoch_times),
+            'avg_epoch_time': np.mean(self.epoch_times),
+            'median_epoch_time': np.median(self.epoch_times),
+            'min_epoch_time': min(self.epoch_times),
+            'max_epoch_time': max(self.epoch_times),
+            'avg_batch_time': np.mean(self.batch_times) if self.batch_times else 0,
+            'total_batch_time': sum(self.batch_times) if self.batch_times else 0
+        }
+
+# Mixup and CutMix data augmentation implementation
+class MixupCutmix:
+    def __init__(self, mixup_alpha=0.8, cutmix_alpha=1.0, switch_prob=0.5):
+        self.mixup_beta = torch.distributions.Beta(mixup_alpha, mixup_alpha)
+        self.cutmix_beta = torch.distributions.Beta(cutmix_alpha, cutmix_alpha)
+        self.switch_prob = switch_prob
+
+    def __call__(self, x, y):
+        if random.random() < self.switch_prob:  # Apply CutMix
+            lam = self.cutmix_beta.sample().item()
+            bbx1, bby1, bbx2, bby2 = self.rand_bbox(x.size(), lam)
+            mixed_x = x.clone()
+            mixed_x[:, :, bbx1:bbx2, bby1:bby2] = x.flip(0)[:, :, bbx1:bbx2, bby1:bby2]
+            lam = 1 - ((bbx2 - bbx1) * (bby2 - bby1) / (x.size()[-1] * x.size()[-2]))
+            return mixed_x, (y, y.flip(0), lam)
+        else:  # Apply Mixup
+            lam = self.mixup_beta.sample().item()
+            mixed_x = lam * x + (1 - lam) * x.flip(0)
+            return mixed_x, (y, y.flip(0), lam)
+
+    def rand_bbox(self, size, lam):
+        W, H = size[2], size[3]
+        cut_rat = np.sqrt(1. - lam)
+        cut_w = int(W * cut_rat)
+        cut_h = int(H * cut_rat)
+        cx = np.random.randint(W)
+        cy = np.random.randint(H)
+        bbx1 = np.clip(cx - cut_w // 2, 0, W)
+        bby1 = np.clip(cy - cut_h // 2, 0, H)
+        bbx2 = np.clip(cx + cut_w // 2, 0, W)
+        bby2 = np.clip(cy + cut_h // 2, 0, H)
+        return bbx1, bby1, bbx2, bby2
+
+# Random Erasing data augmentation
+class RandomErasing:
+    def __init__(self, p=0.5, scale=(0.02, 0.33), ratio=(0.3, 3.3), value=0):
+        self.p = p
+        self.scale = scale
+        self.ratio = ratio
+        self.value = value
+
+    def __call__(self, img):
+        if random.random() > self.p:
+            return img
+        
+        C, H, W = img.shape
+        area = H * W
+        
+        for _ in range(10):
+            erase_area = random.uniform(*self.scale) * area
+            aspect_ratio = random.uniform(*self.ratio)
+            
+            h = int(round(np.sqrt(erase_area * aspect_ratio)))
+            w = int(round(np.sqrt(erase_area / aspect_ratio)))
+            
+            if h < H and w < W:
+                i = random.randint(0, H - h)
+                j = random.randint(0, W - w)
+                img[:, i:i+h, j:j+w] = self.value
+                return img
+        
+        return img
+
+# Training function for one epoch
+def train_one_epoch(model, train_loader, optimizer, criterion, scaler, device, 
+                   mixup_cutmix=None, mix_prob=0.8, time_tracker=None):
+    model.train()
+    total_loss = 0
+    correct = 0
+    total = 0
+    all_preds = []
+    all_targets = []
+    
+    pbar = tqdm(train_loader, desc='Training')
+    for batch_idx, (inputs, targets) in enumerate(pbar):
+        if time_tracker:
+            time_tracker.start_batch()
+        
+        inputs, targets = inputs.to(device), targets.to(device)
+        
+        # Apply Mixup or CutMix augmentation
+        if mixup_cutmix and random.random() < mix_prob:
+            mixed_inputs, mixed_targets = mixup_cutmix(inputs, targets)
+            y_a, y_b, lam = mixed_targets
+            inputs = mixed_inputs
+        else:
+            y_a = targets
+            y_b = targets
+            lam = 1.0
+        
+        optimizer.zero_grad()
+        
+        # Mixed precision training
+        with autocast():
+            outputs = model(inputs)
+            loss = lam * criterion(outputs, y_a) + (1 - lam) * criterion(outputs, y_b)
+        
+        scaler.scale(loss).backward()
+        scaler.step(optimizer)
+        scaler.update()
+        
+        # Calculate metrics
+        total_loss += loss.item()
+        _, predicted = outputs.max(1)
+        total += targets.size(0)
+        correct += (lam * predicted.eq(y_a).sum().float() + 
+                   (1 - lam) * predicted.eq(y_b).sum().float()).item()
+        
+        all_preds.extend(predicted.cpu().numpy())
+        all_targets.extend(targets.cpu().numpy())
+        
+        # Update progress bar
+        avg_loss = total_loss / (batch_idx + 1)
+        acc = 100. * correct / total
+        pbar.set_postfix({'Loss': f'{avg_loss:.4f}', 'Acc': f'{acc:.2f}%'})
+        
+        if time_tracker:
+            time_tracker.end_batch()
+    
+    # Calculate F1 score for training set
+    train_f1 = f1_score(all_targets, all_preds, average='macro') if all_targets else 0.0
+    return {
+        'train_loss': total_loss / len(train_loader),
+        'train_acc': correct / total,
+        'train_f1': train_f1
+    }
+
+# Validation function
+@torch.no_grad()
+def validate(model, val_loader, criterion, device):
+    model.eval()
+    total_loss = 0
+    correct = 0
+    total = 0
+    all_preds = []
+    all_targets = []
+    
+    pbar = tqdm(val_loader, desc='Validation')
+    for inputs, targets in pbar:
+        inputs, targets = inputs.to(device), targets.to(device)
+        outputs = model(inputs)
+        loss = criterion(outputs, targets)
+        
+        total_loss += loss.item()
+        _, predicted = outputs.max(1)
+        total += targets.size(0)
+        correct += predicted.eq(targets).sum().item()
+        
+        all_preds.extend(predicted.cpu().numpy())
+        all_targets.extend(targets.cpu().numpy())
+        
+        # Update progress bar
+        avg_loss = total_loss / (len(val_loader) if pbar.n == 0 else pbar.n)
+        acc = 100. * correct / total
+        pbar.set_postfix({'Loss': f'{avg_loss:.4f}', 'Acc': f'{acc:.2f}%'})
+    
+    # Calculate validation metrics
+    accuracy = accuracy_score(all_targets, all_preds)
+    precision = precision_score(all_targets, all_preds, average='macro', zero_division=0)
+    recall = recall_score(all_targets, all_preds, average='macro', zero_division=0)
+    f1 = f1_score(all_targets, all_preds, average='macro', zero_division=0)
+    class_report = classification_report(all_targets, all_preds, output_dict=True, zero_division=0)
+    cm = confusion_matrix(all_targets, all_preds)
+    
+    return {
+        'val_loss': total_loss / len(val_loader),
+        'val_acc': accuracy,
+        'val_f1': f1,
+        'val_precision': precision,
+        'val_recall': recall,
+        'classification_report': class_report,
+        'confusion_matrix': cm
+    }
+
+# Main training function
+def main():
+    # Configuration parameters
+    config = {
+        'data_path': 'soil',  # Dataset path
+        'num_classes': 6,      # Number of classes
+        'epochs': 300,         # Number of training epochs
+        'batch_size': 32,      # Batch size
+        'lr': 3e-4,            # Learning rate
+        'weight_decay': 1e-4,  # Weight decay
+        'seed': 42,            # Random seed
+        'mixup_alpha': 0.8,    # Mixup alpha parameter
+        'cutmix_alpha': 1.0,   # CutMix alpha parameter
+        'mix_prob': 0.8,       # Probability of applying mixup/cutmix
+        'erase_prob': 0.25,    # Random erasing probability
+        'save_dir': 'results', # Directory to save results
+    }
+    
+    # Set random seed for reproducibility
+    set_seed(config['seed'])
+    
+    # Create results directory
+    os.makedirs(config['save_dir'], exist_ok=True)
+    
+    # Data augmentation and transformation pipelines
+    train_transform = transforms.Compose([
+        transforms.RandomResizedCrop(224),
+        transforms.RandomHorizontalFlip(),
+        transforms.RandomVerticalFlip(),
+        transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        RandomErasing(p=config['erase_prob'])
+    ])
+    
+    val_transform = transforms.Compose([
+        transforms.Resize(256),
+        transforms.CenterCrop(224),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+    ])
+    
+    # Load datasets
+    train_dataset = datasets.ImageFolder(
+        os.path.join(config['data_path'], 'train'), 
+        transform=train_transform
+    )
+    val_dataset = datasets.ImageFolder(
+        os.path.join(config['data_path'], 'val'), 
+        transform=val_transform
+    )
+    
+    train_loader = DataLoader(
+        train_dataset, 
+        batch_size=config['batch_size'], 
+        shuffle=True, 
+        num_workers=4,
+        pin_memory=True
+    )
+    val_loader = DataLoader(
+        val_dataset, 
+        batch_size=config['batch_size'], 
+        num_workers=4,
+        pin_memory=True
+    )
+    
+    # Initialize device
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(f"Using device: {device}")
+    
+    # Initialize model
+    model = build_soilnet_hybrid(num_classes=config['num_classes']).to(device)
+    print(f"Model created with {sum(p.numel() for p in model.parameters())/1e6:.2f}M parameters")
+    
+    # Initialize mixup/cutmix augmentation
+    mixup_cutmix = MixupCutmix(
+        mixup_alpha=config['mixup_alpha'],
+        cutmix_alpha=config['cutmix_alpha']
+    )
+    
+    # Loss function and optimizer
+    criterion = nn.CrossEntropyLoss()
+    optimizer = optim.AdamW(
+        model.parameters(), 
+        lr=config['lr'], 
+        weight_decay=config['weight_decay']
+    )
+    scaler = GradScaler()
+    
+    # Learning rate scheduler
+    scheduler = optim.lr_scheduler.CosineAnnealingLR(
+        optimizer, 
+        T_max=config['epochs']
+    )
+    
+    # Time tracker for performance monitoring
+    time_tracker = TimeTracker()
+    
+    # Training history tracking
+    history = {
+        'epoch': [],
+        'train_loss': [],
+        'val_loss': [],
+        'train_acc': [],
+        'val_acc': [],
+        'train_f1': [],
+        'val_f1': [],
+        'val_precision': [],
+        'val_recall': [],
+        'lr': []
+    }
+    
+    # Create CSV file for metrics logging
+    csv_path = os.path.join(config['save_dir'], 'training_metrics.csv')
+    with open(csv_path, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow([
+            'epoch', 'train_loss', 'val_loss', 
+            'train_acc', 'val_acc', 'train_f1', 'val_f1',
+            'val_precision', 'val_recall', 'lr'
+        ])
+    
+    # Track best validation accuracy
+    best_val_acc = 0.0
+    
+    # Training loop
+    for epoch in range(1, config['epochs'] + 1):
+        print(f"\nEpoch {epoch}/{config['epochs']}")
+        time_tracker.start_epoch()
+        
+        # Training phase
+        train_metrics = train_one_epoch(
+            model, train_loader, optimizer, criterion, scaler, device,
+            mixup_cutmix, config['mix_prob'], time_tracker
+        )
+        
+        # Validation phase
+        val_metrics = validate(model, val_loader, criterion, device)
+        
+        # Update learning rate
+        scheduler.step()
+        current_lr = optimizer.param_groups[0]['lr']
+        
+        # Record metrics in history
+        history['epoch'].append(epoch)
+        history['train_loss'].append(train_metrics['train_loss'])
+        history['val_loss'].append(val_metrics['val_loss'])
+        history['train_acc'].append(train_metrics['train_acc'])
+        history['val_acc'].append(val_metrics['val_acc'])
+        history['train_f1'].append(train_metrics['train_f1'])
+        history['val_f1'].append(val_metrics['val_f1'])
+        history['val_precision'].append(val_metrics['val_precision'])
+        history['val_recall'].append(val_metrics['val_recall'])
+        history['lr'].append(current_lr)
+        
+        # Save metrics to CSV
+        with open(csv_path, 'a', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow([
+                epoch, train_metrics['train_loss'], val_metrics['val_loss'],
+                train_metrics['train_acc'], val_metrics['val_acc'], 
+                train_metrics['train_f1'], val_metrics['val_f1'],
+                val_metrics['val_precision'], val_metrics['val_recall'],
+                current_lr
+            ])
+        
+        # Print epoch summary
+        epoch_time = time_tracker.end_epoch()
+        print(f"Epoch {epoch} completed in {epoch_time:.2f}s")
+        print(f"Train Loss: {train_metrics['train_loss']:.4f} | Val Loss: {val_metrics['val_loss']:.4f}")
+        print(f"Train Acc: {train_metrics['train_acc']*100:.2f}% | Val Acc: {val_metrics['val_acc']*100:.2f}%")
+        print(f"Val F1: {val_metrics['val_f1']:.4f} | Val Precision: {val_metrics['val_precision']:.4f} | Val Recall: {val_metrics['val_recall']:.4f}")
+        print(f"Learning Rate: {current_lr:.2e}")
+        
+        # Save best model based on validation accuracy
+        if val_metrics['val_acc'] > best_val_acc:
+            best_val_acc = val_metrics['val_acc']
+            model_save_path = os.path.join(config['save_dir'], f'best_model_acc_{best_val_acc*100:.2f}.pth')
+            torch.save(model.state_dict(), model_save_path)
+            print(f"Saved best model with val acc: {best_val_acc*100:.2f}%")
+            
+            # Save classification report and confusion matrix for best model
+            with open(os.path.join(config['save_dir'], 'best_classification_report.json'), 'w') as f:
+                json.dump(val_metrics['classification_report'], f, indent=4)
+            
+            np.savetxt(os.path.join(config['save_dir'], 'best_confusion_matrix.csv'), 
+                      val_metrics['confusion_matrix'], delimiter=',', fmt='%d')
+    
+    # Save final model
+    torch.save(model.state_dict(), os.path.join(config['save_dir'], 'final_model.pth'))
+    
+    # Save complete training history
+    with open(os.path.join(config['save_dir'], 'training_history.json'), 'w') as f:
+        json.dump(history, f, indent=4)
+    
+    # Print time statistics
+    time_stats = time_tracker.get_stats()
+    print("\nTraining completed!")
+    print(f"Total training time: {time_stats['total_epoch_time']:.2f}s")
+    print(f"Average epoch time: {time_stats['avg_epoch_time']:.2f}s")
+    print(f"Best validation accuracy: {best_val_acc*100:.2f}%")
+    
+    # Save time statistics
+    with open(os.path.join(config['save_dir'], 'time_stats.json'), 'w') as f:
+        json.dump(time_stats, f, indent=4)
+
+if __name__ == "__main__":
+    main()
