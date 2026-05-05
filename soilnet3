@@ -1,0 +1,1050 @@
+#%%
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import DataLoader, Subset, ConcatDataset
+from torchvision import datasets, transforms
+from torch.cuda.amp import GradScaler, autocast
+import os
+import time
+import numpy as np
+import random
+import json
+import csv
+from tqdm import tqdm
+from sklearn.metrics import (accuracy_score, f1_score, confusion_matrix,
+                              classification_report, precision_score, recall_score)
+from sklearn.model_selection import StratifiedKFold
+
+# ★ ADD: 混淆矩阵绘图
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# ★ ADD: CPU 内存监控
+import psutil
+
+from models.soilnetgraph import SoilNetHybrid, build_soilnet_hybrid
+
+# ──────────────────────────────────────────────
+# 原有：随机种子 / TimeTracker / MixupCutmix / RandomErasing
+# ──────────────────────────────────────────────
+def set_seed(seed=42):
+    random.seed(seed); np.random.seed(seed)
+    torch.manual_seed(seed); torch.cuda.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    torch.backends.cudnn.deterministic = True; torch.backends.cudnn.benchmark = False
+
+class TimeTracker:
+    def __init__(self):
+        self.epoch_times, self.batch_times = [], []
+        self.epoch_start = self.batch_start = None
+    def start_epoch(self): self.epoch_start = time.time()
+    def end_epoch(self):
+        t = time.time() - self.epoch_start; self.epoch_times.append(t); return t
+    def start_batch(self): self.batch_start = time.time()
+    def end_batch(self):
+        t = time.time() - self.batch_start; self.batch_times.append(t); return t
+    def get_stats(self):
+        return {
+            'total_epoch_time': sum(self.epoch_times),
+            'avg_epoch_time': float(np.mean(self.epoch_times)),
+            'median_epoch_time': float(np.median(self.epoch_times)),
+            'min_epoch_time': min(self.epoch_times), 'max_epoch_time': max(self.epoch_times),
+            'avg_batch_time': float(np.mean(self.batch_times)) if self.batch_times else 0,
+            'total_batch_time': sum(self.batch_times) if self.batch_times else 0,
+        }
+
+# ★ ADD: 内存跟踪器（几乎零开销）
+class MemoryTracker:
+    """轻量级内存跟踪：每 epoch 记录一次峰值 GPU / CPU 内存，不影响训练速度"""
+    def __init__(self, device):
+        self.device = device
+        self.history = []  # per-epoch
+        self.peak_gpu_mb = 0.0
+        self.peak_cpu_mb = 0.0
+
+    def reset_epoch(self):
+        """在 epoch 开始时调用，重置峰值计数器"""
+        if self.device.type == 'cuda':
+            torch.cuda.reset_peak_memory_stats(self.device)
+            torch.cuda.synchronize()
+
+    def record_epoch(self):
+        """在 epoch 结束时调用，记录本 epoch 的峰值"""
+        cpu_mb = psutil.Process().memory_info().rss / 1024 / 1024
+        if self.device.type == 'cuda':
+            torch.cuda.synchronize()
+            gpu_mb = torch.cuda.max_memory_allocated(self.device) / 1024 / 1024
+        else:
+            gpu_mb = 0.0
+
+        self.peak_gpu_mb = max(self.peak_gpu_mb, gpu_mb)
+        self.peak_cpu_mb = max(self.peak_cpu_mb, cpu_mb)
+        self.history.append({
+            'gpu_peak_mb': round(gpu_mb, 1),
+            'cpu_rss_mb':  round(cpu_mb, 1),
+        })
+        return gpu_mb, cpu_mb
+
+    def get_stats(self):
+        if not self.history:
+            return {}
+        gpu_peaks = [h['gpu_peak_mb'] for h in self.history]
+        cpu_peaks = [h['cpu_rss_mb'] for h in self.history]
+        return {
+            'peak_gpu_mb': round(self.peak_gpu_mb, 1),
+            'peak_cpu_mb': round(self.peak_cpu_mb, 1),
+            'avg_gpu_peak_mb': round(float(np.mean(gpu_peaks)), 1),
+            'avg_cpu_rss_mb':  round(float(np.mean(cpu_peaks)), 1),
+            'final_gpu_peak_mb': gpu_peaks[-1],
+            'final_cpu_rss_mb':  cpu_peaks[-1],
+        }
+
+class MixupCutmix:
+    def __init__(self, mixup_alpha=0.8, cutmix_alpha=1.0, switch_prob=0.5):
+        self.mixup_beta = torch.distributions.Beta(mixup_alpha, mixup_alpha)
+        self.cutmix_beta = torch.distributions.Beta(cutmix_alpha, cutmix_alpha)
+        self.switch_prob = switch_prob
+    def __call__(self, x, y):
+        if random.random() < self.switch_prob:
+            lam = self.cutmix_beta.sample().item()
+            bbx1, bby1, bbx2, bby2 = self.rand_bbox(x.size(), lam)
+            mixed_x = x.clone()
+            mixed_x[:, :, bbx1:bbx2, bby1:bby2] = x.flip(0)[:, :, bbx1:bbx2, bby1:bby2]
+            lam = 1 - ((bbx2 - bbx1) * (bby2 - bby1) / (x.size()[-1] * x.size()[-2]))
+        else:
+            lam = self.mixup_beta.sample().item()
+            mixed_x = lam * x + (1 - lam) * x.flip(0)
+        return mixed_x, (y, y.flip(0), lam)
+    def rand_bbox(self, size, lam):
+        W, H = size[2], size[3]; cut_rat = np.sqrt(1. - lam)
+        cut_w, cut_h = int(W * cut_rat), int(H * cut_rat)
+        cx, cy = np.random.randint(W), np.random.randint(H)
+        return (np.clip(cx-cut_w//2,0,W), np.clip(cy-cut_h//2,0,H),
+                np.clip(cx+cut_w//2,0,W), np.clip(cy+cut_h//2,0,H))
+
+class RandomErasing:
+    def __init__(self, p=0.5, scale=(0.02,0.33), ratio=(0.3,3.3), value=0):
+        self.p, self.scale, self.ratio, self.value = p, scale, ratio, value
+    def __call__(self, img):
+        if random.random() > self.p: return img
+        C, H, W = img.shape; area = H * W
+        for _ in range(10):
+            ea = random.uniform(*self.scale) * area; ar = random.uniform(*self.ratio)
+            h, w = int(round(np.sqrt(ea*ar))), int(round(np.sqrt(ea/ar)))
+            if h < H and w < W:
+                i, j = random.randint(0,H-h), random.randint(0,W-w)
+                img[:, i:i+h, j:j+w] = self.value; return img
+        return img
+
+# ──────────────────────────────────────────────
+# ★ ADD: 混淆矩阵绘图 & 保存
+# ──────────────────────────────────────────────
+def save_confusion_matrix(cm, class_names, save_path):
+    """保存混淆矩阵为 JSON + PNG，训练后调用，不影响速度"""
+    # JSON
+    json_path = save_path.replace('.png', '.json') if save_path.endswith('.png') else save_path + '.json'
+    with open(json_path, 'w') as f:
+        json.dump({
+            'matrix': cm.tolist(),
+            'class_names': class_names,
+        }, f, indent=4)
+
+    # PNG
+    plt.figure(figsize=(max(8, len(class_names)), max(6, len(class_names) - 1)))
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+                xticklabels=class_names, yticklabels=class_names,
+                cbar_kws={'label': 'Count'})
+    plt.xlabel('Predicted', fontweight='bold', fontsize=12)
+    plt.ylabel('True', fontweight='bold', fontsize=12)
+    plt.title('Confusion Matrix', fontweight='bold', fontsize=14)
+    plt.tight_layout()
+    plt.savefig(save_path, dpi=200, bbox_inches='tight')
+    plt.close()
+
+# ──────────────────────────────────────────────
+# 吞吐量测试
+# ──────────────────────────────────────────────
+def measure_throughput(model, device, input_size=(3,224,224), batch_size=32,
+                       warmup=10, iterations=50):
+    model.eval()
+    x = torch.randn(batch_size, *input_size).to(device)
+    for _ in range(warmup):
+        with torch.no_grad(): _ = model(x)
+    if device.type == 'cuda': torch.cuda.synchronize()
+    t0 = time.time()
+    for _ in range(iterations):
+        with torch.no_grad(): _ = model(x)
+    if device.type == 'cuda': torch.cuda.synchronize()
+    elapsed = time.time() - t0
+    return {
+        'throughput(img/s)': round(batch_size * iterations / elapsed, 1),
+        'latency_ms': round(elapsed / iterations * 1000, 2),
+    }
+
+# ──────────────────────────────────────────────
+# validate 增加 per_class_metrics
+# ──────────────────────────────────────────────
+@torch.no_grad()
+def validate(model, val_loader, criterion, device, class_names=None):
+    model.eval()
+    total_loss = correct = total = 0
+    all_preds, all_targets = [], []
+
+    pbar = tqdm(val_loader, desc='Validation')
+    for inputs, targets in pbar:
+        inputs, targets = inputs.to(device), targets.to(device)
+        outputs = model(inputs); loss = criterion(outputs, targets)
+        total_loss += loss.item()
+        _, predicted = outputs.max(1)
+        total += targets.size(0); correct += predicted.eq(targets).sum().item()
+        all_preds.extend(predicted.cpu().numpy())
+        all_targets.extend(targets.cpu().numpy())
+        pbar.set_postfix({'Loss': f'{total_loss/(pbar.n+1):.4f}',
+                          'Acc': f'{100.*correct/total:.2f}%'})
+
+    accuracy = accuracy_score(all_targets, all_preds)
+    precision = precision_score(all_targets, all_preds, average='macro', zero_division=0)
+    recall = recall_score(all_targets, all_preds, average='macro', zero_division=0)
+    f1 = f1_score(all_targets, all_preds, average='macro', zero_division=0)
+    class_report = classification_report(all_targets, all_preds, output_dict=True, zero_division=0)
+    cm = confusion_matrix(all_targets, all_preds)
+
+    per_class = {}
+    if class_names:
+        for i, name in enumerate(class_names):
+            key = str(i)
+            if key in class_report:
+                per_class[name] = {
+                    'precision': round(class_report[key]['precision'], 4),
+                    'recall':    round(class_report[key]['recall'], 4),
+                    'f1_score':  round(class_report[key]['f1-score'], 4),
+                    'support':   class_report[key]['support'],
+                }
+
+    return {
+        'val_loss': total_loss / len(val_loader),
+        'val_acc': accuracy, 'val_f1': f1,
+        'val_precision': precision, 'val_recall': recall,
+        'classification_report': class_report, 'confusion_matrix': cm,
+        'per_class_metrics': per_class,
+    }
+
+# ──────────────────────────────────────────────
+# train_one_epoch
+# ──────────────────────────────────────────────
+def train_one_epoch(model, train_loader, optimizer, criterion, scaler, device,
+                   mixup_cutmix=None, mix_prob=0.8, time_tracker=None):
+    model.train()
+    total_loss = correct = total = 0
+    all_preds, all_targets = [], []
+
+    pbar = tqdm(train_loader, desc='Training')
+    for batch_idx, (inputs, targets) in enumerate(pbar):
+        if time_tracker: time_tracker.start_batch()
+        inputs, targets = inputs.to(device), targets.to(device)
+
+        if mixup_cutmix and random.random() < mix_prob:
+            mixed_inputs, mixed_targets = mixup_cutmix(inputs, targets)
+            y_a, y_b, lam = mixed_targets; inputs = mixed_inputs
+        else:
+            y_a, y_b, lam = targets, targets, 1.0
+
+        optimizer.zero_grad()
+        with autocast():
+            outputs = model(inputs)
+            loss = lam * criterion(outputs, y_a) + (1 - lam) * criterion(outputs, y_b)
+        scaler.scale(loss).backward(); scaler.step(optimizer); scaler.update()
+
+        total_loss += loss.item()
+        _, predicted = outputs.max(1); total += targets.size(0)
+        correct += (lam * predicted.eq(y_a).sum().float() +
+                   (1 - lam) * predicted.eq(y_b).sum().float()).item()
+        all_preds.extend(predicted.cpu().numpy())
+        all_targets.extend(targets.cpu().numpy())
+        pbar.set_postfix({'Loss': f'{total_loss/(batch_idx+1):.4f}',
+                          'Acc': f'{100.*correct/total:.2f}%'})
+        if time_tracker: time_tracker.end_batch()
+
+    train_f1 = f1_score(all_targets, all_preds, average='macro', zero_division=0) if all_targets else 0.0
+    return {'train_loss': total_loss/len(train_loader),
+            'train_acc': correct/total, 'train_f1': train_f1}
+
+# ──────────────────────────────────────────────
+# ★ MODIFY: 单折训练 — 增加混淆矩阵 + 内存记录
+# ──────────────────────────────────────────────
+def train_single_fold(config, device, train_loader, val_loader, class_names,
+                      save_dir, fold_tag=''):
+    os.makedirs(save_dir, exist_ok=True)
+    model = build_soilnet_hybrid(num_classes=config['num_classes']).to(device)
+    mixup_cutmix = MixupCutmix(config['mixup_alpha'], config['cutmix_alpha'])
+    criterion = nn.CrossEntropyLoss()
+    optimizer = optim.AdamW(model.parameters(), lr=config['lr'], weight_decay=config['weight_decay'])
+    scaler = GradScaler()
+    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=config['epochs'])
+    time_tracker = TimeTracker()
+    mem_tracker = MemoryTracker(device)  # ★ ADD
+
+    # CSV 含 per-class + memory 列
+    csv_path = os.path.join(save_dir, 'training_metrics.csv')
+    csv_hdr = ['epoch','train_loss','val_loss','train_acc','val_acc',
+               'train_f1','val_f1','val_precision','val_recall','lr',
+               'gpu_peak_mb','cpu_rss_mb']  # ★ ADD memory 列
+    for c in class_names:
+        csv_hdr += [f'{c}_prec', f'{c}_rec', f'{c}_f1']
+
+    history = {k: [] for k in csv_hdr}
+    with open(csv_path, 'w', newline='') as f:
+        csv.writer(f).writerow(csv_hdr)
+
+    best_val_acc, best_pcm, best_cm = 0.0, None, None  # ★ ADD best_cm
+
+    for epoch in range(1, config['epochs'] + 1):
+        time_tracker.start_epoch()
+        mem_tracker.reset_epoch()  # ★ ADD: 重置 GPU 峰值计数器
+
+        tm = train_one_epoch(model, train_loader, optimizer, criterion, scaler,
+                             device, mixup_cutmix, config['mix_prob'], time_tracker)
+        vm = validate(model, val_loader, criterion, device, class_names)
+        scheduler.step(); lr_now = optimizer.param_groups[0]['lr']
+
+        gpu_mb, cpu_mb = mem_tracker.record_epoch()  # ★ ADD: 记录本 epoch 内存
+        epoch_time = time_tracker.end_epoch()
+
+        # 写 CSV（含 per-class + memory）
+        row = [epoch, tm['train_loss'], vm['val_loss'], tm['train_acc'], vm['val_acc'],
+               tm['train_f1'], vm['val_f1'], vm['val_precision'], vm['val_recall'], lr_now,
+               gpu_mb, cpu_mb]  # ★ ADD
+        for c in class_names:
+            pm = vm['per_class_metrics'].get(c, {})
+            row += [pm.get('precision',''), pm.get('recall',''), pm.get('f1_score','')]
+        with open(csv_path, 'a', newline='') as f:
+            csv.writer(f).writerow(row)
+
+        print(f"{fold_tag}Epoch {epoch}/{config['epochs']} ({epoch_time:.1f}s)  "
+              f"TrL {tm['train_loss']:.4f} VaL {vm['val_loss']:.4f}  "
+              f"TrA {tm['train_acc']:.4f} VaA {vm['val_acc']:.4f}  "
+              f"VaF1 {vm['val_f1']:.4f}  LR {lr_now:.2e}  "
+              f"GPU {gpu_mb:.0f}MB CPU {cpu_mb:.0f}MB")  # ★ ADD
+
+        if vm['val_acc'] > best_val_acc:
+            best_val_acc = vm['val_acc']
+            best_pcm = vm['per_class_metrics']
+            best_cm = vm['confusion_matrix']  # ★ ADD
+            torch.save(model.state_dict(),
+                       os.path.join(save_dir, f'best_model_{best_val_acc:.4f}.pth'))
+            with open(os.path.join(save_dir, 'best_per_class.json'), 'w') as f:
+                json.dump(best_pcm, f, indent=4)
+            # ★ ADD: 保存最佳 epoch 的混淆矩阵
+            save_confusion_matrix(best_cm, class_names, os.path.join(save_dir, 'best_confusion_matrix.png'))
+
+    # ★ ADD: 训练结束后用最佳模型重新验证，保存最终混淆矩阵
+    model.load_state_dict(torch.load(
+        os.path.join(save_dir, f'best_model_{best_val_acc:.4f}.pth'),
+        map_location=device))
+    final_vm = validate(model, val_loader, criterion, device, class_names)
+    save_confusion_matrix(final_vm['confusion_matrix'], class_names,
+                          os.path.join(save_dir, 'final_confusion_matrix.png'))
+
+    time_stats = time_tracker.get_stats()
+    mem_stats = mem_tracker.get_stats()  # ★ ADD
+    tp = measure_throughput(model, device, batch_size=config['batch_size'])
+
+    # ★ ADD: 保存内存统计
+    with open(os.path.join(save_dir, 'memory_stats.json'), 'w') as f:
+        json.dump(mem_stats, f, indent=4)
+    with open(os.path.join(save_dir, 'throughput.json'), 'w') as f:
+        json.dump(tp, f, indent=4)
+    print(f"{fold_tag}Throughput: {tp}")
+    print(f"{fold_tag}Memory: Peak GPU {mem_stats.get('peak_gpu_mb',0):.0f}MB, "
+          f"Peak CPU {mem_stats.get('peak_cpu_mb',0):.0f}MB")  # ★ ADD
+
+    return best_val_acc, best_pcm, time_stats, tp, mem_stats  # ★ ADD mem_stats
+
+# ──────────────────────────────────────────────
+# ★ MODIFY: 5 折交叉验证 — 增加混淆矩阵 + 内存
+# ──────────────────────────────────────────────
+def run_cross_validation(config, device):
+    print(f"\n{'#'*70}\n  5-Fold Stratified CV — {config['num_classes']} classes\n{'#'*70}")
+
+    train_tf = transforms.Compose([
+        transforms.RandomResizedCrop(224),
+        transforms.RandomHorizontalFlip(), transforms.RandomVerticalFlip(),
+        transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),
+        transforms.ToTensor(),
+        transforms.Normalize([0.485,0.456,0.406],[0.229,0.224,0.225]),
+        RandomErasing(p=config['erase_prob']),
+    ])
+    val_tf = transforms.Compose([
+        transforms.Resize(256), transforms.CenterCrop(224), transforms.ToTensor(),
+        transforms.Normalize([0.485,0.456,0.406],[0.229,0.224,0.225]),
+    ])
+
+    train_path = os.path.join(config['data_path'], 'train')
+    val_path   = os.path.join(config['data_path'], 'val')
+    class_names = datasets.ImageFolder(train_path).classes
+
+    ds_tr_aug   = datasets.ImageFolder(train_path, transform=train_tf)
+    ds_tr_plain = datasets.ImageFolder(train_path, transform=val_tf)
+    has_val = os.path.exists(val_path) and len(os.listdir(val_path)) > 0
+    if has_val:
+        ds_va_aug   = datasets.ImageFolder(val_path, transform=train_tf)
+        ds_va_plain = datasets.ImageFolder(val_path, transform=val_tf)
+        combined_aug   = ConcatDataset([ds_tr_aug, ds_va_aug])
+        combined_plain = ConcatDataset([ds_tr_plain, ds_va_plain])
+        all_targets = ([y for _,y in ds_tr_aug.samples] +
+                       [y for _,y in ds_va_aug.samples])
+    else:
+        combined_aug, combined_plain = ds_tr_aug, ds_tr_plain
+        all_targets = [y for _,y in ds_tr_aug.samples]
+
+    skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=config['seed'])
+    indices = np.arange(len(all_targets))
+    cv_dir = f"cv_results_{time.strftime('%Y%m%d_%H%M%S')}"
+    fold_accs, fold_tps, fold_mems = [], [], []  # ★ ADD fold_mems
+    fold_cms = []  # ★ ADD: 收集每折最终混淆矩阵
+
+    for fold, (tr_idx, va_idx) in enumerate(skf.split(indices, np.array(all_targets))):
+        print(f"\n{'='*60}\n  Fold {fold+1}/5  train={len(tr_idx)} val={len(va_idx)}\n{'='*60}")
+        set_seed(config['seed'] + fold)
+
+        train_sub = Subset(combined_aug,   tr_idx.tolist())
+        val_sub   = Subset(combined_plain, va_idx.tolist())
+        tl = DataLoader(train_sub, batch_size=config['batch_size'], shuffle=True,  num_workers=4, pin_memory=True)
+        vl = DataLoader(val_sub,   batch_size=config['batch_size'], shuffle=False, num_workers=4, pin_memory=True)
+
+        fold_dir = os.path.join(cv_dir, f'fold_{fold+1}')
+        best_acc, best_pcm, ts, tp, mem = train_single_fold(  # ★ ADD mem
+            config, device, tl, vl, class_names, fold_dir,
+            fold_tag=f'[F{fold+1}] ')
+        fold_accs.append(best_acc); fold_tps.append(tp)
+        fold_mems.append(mem)  # ★ ADD
+
+        # ★ ADD: 读取该折最终混淆矩阵
+        cm_json = os.path.join(fold_dir, 'final_confusion_matrix.json')
+        if os.path.exists(cm_json):
+            with open(cm_json) as f:
+                fold_cms.append(json.load(f)['matrix'])
+
+    # ★ ADD: 汇总混淆矩阵（取平均）
+    avg_cm = None
+    if fold_cms:
+        avg_cm = np.mean([np.array(c) for c in fold_cms], axis=0).astype(int).tolist()
+
+    # CV 汇总
+    summary = {
+        'fold_accs': fold_accs,
+        'mean_acc': float(np.mean(fold_accs)),
+        'std_acc':  float(np.std(fold_accs)),
+        'avg_throughput': np.mean([t['throughput(img/s)'] for t in fold_tps]),
+        'avg_latency_ms': np.mean([t['latency_ms'] for t in fold_tps]),
+        'avg_peak_gpu_mb': round(np.mean([m['peak_gpu_mb'] for m in fold_mems]), 1),  # ★ ADD
+        'avg_peak_cpu_mb': round(np.mean([m['peak_cpu_mb'] for m in fold_mems]), 1),  # ★ ADD
+    }
+    os.makedirs(os.path.join(cv_dir, 'summary'), exist_ok=True)
+    with open(os.path.join(cv_dir, 'summary', 'cv_summary.json'), 'w') as f:
+        json.dump(summary, f, indent=4)
+
+    # ★ ADD: 保存平均混淆矩阵
+    if avg_cm:
+        save_confusion_matrix(np.array(avg_cm), class_names,
+                              os.path.join(cv_dir, 'summary', 'cv_avg_confusion_matrix.png'))
+        with open(os.path.join(cv_dir, 'summary', 'cv_avg_confusion_matrix.json'), 'w') as f:
+            json.dump({'matrix': avg_cm, 'class_names': class_names,
+                       'note': 'Averaged across 5 folds (rounded to int)'}, f, indent=4)
+
+    print(f"\n{'#'*70}\n  CV Result: {summary['mean_acc']:.4f} ± {summary['std_acc']:.4f}")
+    for i, a in enumerate(fold_accs):
+        print(f"  Fold {i+1}: {a:.4f}  |  Throughput: {fold_tps[i]}  |  "
+              f"Peak GPU: {fold_mems[i]['peak_gpu_mb']:.0f}MB  "
+              f"Peak CPU: {fold_mems[i]['peak_cpu_mb']:.0f}MB")  # ★ ADD
+    print(f"  Avg Throughput: {summary['avg_throughput']:.1f} img/s  "
+          f"Avg Latency: {summary['avg_latency_ms']:.2f} ms")
+    print(f"  Avg Peak GPU: {summary['avg_peak_gpu_mb']:.0f}MB  "
+          f"Avg Peak CPU: {summary['avg_peak_cpu_mb']:.0f}MB")  # ★ ADD
+    print(f"{'#'*70}")
+    return summary
+
+# ──────────────────────────────────────────────
+# ★ MODIFY: main — 适配新增返回值
+# ──────────────────────────────────────────────
+def main():
+    config = {
+        'data_path': 'soil',
+        'num_classes': 6,
+        'epochs': 300,
+        'batch_size': 32,
+        'lr': 3e-4,
+        'weight_decay': 1e-4,
+        'seed': 42,
+        'mixup_alpha': 0.8,
+        'cutmix_alpha': 1.0,
+        'mix_prob': 0.8,
+        'erase_prob': 0.25,
+        'save_dir': 'results',
+        'use_cv': True,
+    }
+
+    set_seed(config['seed'])
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(f"Device: {device}")
+
+    if config['use_cv']:
+        return run_cross_validation(config, device)
+
+    train_transform = transforms.Compose([
+        transforms.RandomResizedCrop(224),
+        transforms.RandomHorizontalFlip(), transforms.RandomVerticalFlip(),
+        transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),
+        transforms.ToTensor(),
+        transforms.Normalize([0.485,.456,0.406],[0.229,0.224,0.225]),
+        RandomErasing(p=config['erase_prob']),
+    ])
+    val_transform = transforms.Compose([
+        transforms.Resize(256), transforms.CenterCrop(224), transforms.ToTensor(),
+        transforms.Normalize([0.485,0.456,0.406],[0.229,0.224,0.225]),
+    ])
+
+    train_dataset = datasets.ImageFolder(os.path.join(config['data_path'],'train'), train_transform)
+    val_dataset   = datasets.ImageFolder(os.path.join(config['data_path'],'val'),   val_transform)
+    class_names   = train_dataset.classes
+
+    train_loader = DataLoader(train_dataset, batch_size=config['batch_size'],
+                              shuffle=True, num_workers=4, pin_memory=True)
+    val_loader   = DataLoader(val_dataset,   batch_size=config['batch_size'],
+                              shuffle=False, num_workers=4, pin_memory=True)
+
+    # ★ ADD: 适配 mem_stats 返回值
+    best_val_acc, best_pcm, time_stats, tp, mem_stats = train_single_fold(
+        config, device, train_loader, val_loader, class_names, config['save_dir'])
+
+    summary = {
+        'best_val_acc': float(best_val_acc),
+        'best_per_class': best_pcm,
+        'time_stats': time_stats,
+        'throughput': tp,
+        'memory': mem_stats,  # ★ ADD
+    }
+    with open(os.path.join(config['save_dir'], 'final_summary.json'), 'w') as f:
+        json.dump(summary, f, indent=4, default=str)
+
+    print(f"\nTraining done! Best Acc: {best_val_acc:.4f}")
+    print(f"Throughput: {tp}")
+    print(f"Memory: Peak GPU {mem_stats['peak_gpu_mb']:.0f}MB, "
+          f"Peak CPU {mem_stats['peak_cpu_mb']:.0f}MB")  # ★ ADD
+    if best_pcm:
+        print("\nPer-Class (best epoch):")
+        for name, m in best_pcm.items():
+            print(f"  {name:<20} P {m['precision']:.4f}  R {m['recall']:.4f}  "
+                  f"F1 {m['f1_score']:.4f}  N {m['support']}")
+
+if __name__ == "__main__":
+    main()
+
+#%%
+
+
+
+
+
+
+
+
+#无数据增强策略
+
+
+
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import DataLoader, Subset, ConcatDataset
+from torchvision import datasets, transforms
+from torch.cuda.amp import GradScaler, autocast
+import os
+import time
+import numpy as np
+import random
+import json
+import csv
+from tqdm import tqdm
+from sklearn.metrics import (accuracy_score, f1_score, confusion_matrix,
+                              classification_report, precision_score, recall_score)
+from sklearn.model_selection import StratifiedKFold
+
+# 混淆矩阵绘图
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# CPU 内存监控
+import psutil
+
+from models.soilnetgraph import SoilNetHybrid, build_soilnet_hybrid
+
+# ──────────────────────────────────────────────
+# 随机种子 / TimeTracker
+# ──────────────────────────────────────────────
+def set_seed(seed=42):
+    random.seed(seed); np.random.seed(seed)
+    torch.manual_seed(seed); torch.cuda.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    torch.backends.cudnn.deterministic = True; torch.backends.cudnn.benchmark = False
+
+class TimeTracker:
+    def __init__(self):
+        self.epoch_times, self.batch_times = [], []
+        self.epoch_start = self.batch_start = None
+    def start_epoch(self): self.epoch_start = time.time()
+    def end_epoch(self):
+        t = time.time() - self.epoch_start; self.epoch_times.append(t); return t
+    def start_batch(self): self.batch_start = time.time()
+    def end_batch(self):
+        t = time.time() - self.batch_start; self.batch_times.append(t); return t
+    def get_stats(self):
+        return {
+            'total_epoch_time': sum(self.epoch_times),
+            'avg_epoch_time': float(np.mean(self.epoch_times)),
+            'median_epoch_time': float(np.median(self.epoch_times)),
+            'min_epoch_time': min(self.epoch_times), 'max_epoch_time': max(self.epoch_times),
+            'avg_batch_time': float(np.mean(self.batch_times)) if self.batch_times else 0,
+            'total_batch_time': sum(self.batch_times) if self.batch_times else 0,
+        }
+
+# 内存跟踪器
+class MemoryTracker:
+    """轻量级内存跟踪：每 epoch 记录一次峰值 GPU / CPU 内存，不影响训练速度"""
+    def __init__(self, device):
+        self.device = device
+        self.history = []  # per-epoch
+        self.peak_gpu_mb = 0.0
+        self.peak_cpu_mb = 0.0
+
+    def reset_epoch(self):
+        """在 epoch 开始时调用，重置峰值计数器"""
+        if self.device.type == 'cuda':
+            torch.cuda.reset_peak_memory_stats(self.device)
+            torch.cuda.synchronize()
+
+    def record_epoch(self):
+        """在 epoch 结束时调用，记录本 epoch 的峰值"""
+        cpu_mb = psutil.Process().memory_info().rss / 1024 / 1024
+        if self.device.type == 'cuda':
+            torch.cuda.synchronize()
+            gpu_mb = torch.cuda.max_memory_allocated(self.device) / 1024 / 1024
+        else:
+            gpu_mb = 0.0
+
+        self.peak_gpu_mb = max(self.peak_gpu_mb, gpu_mb)
+        self.peak_cpu_mb = max(self.peak_cpu_mb, cpu_mb)
+        self.history.append({
+            'gpu_peak_mb': round(gpu_mb, 1),
+            'cpu_rss_mb':  round(cpu_mb, 1),
+        })
+        return gpu_mb, cpu_mb
+
+    def get_stats(self):
+        if not self.history:
+            return {}
+        gpu_peaks = [h['gpu_peak_mb'] for h in self.history]
+        cpu_peaks = [h['cpu_rss_mb'] for h in self.history]
+        return {
+            'peak_gpu_mb': round(self.peak_gpu_mb, 1),
+            'peak_cpu_mb': round(self.peak_cpu_mb, 1),
+            'avg_gpu_peak_mb': round(float(np.mean(gpu_peaks)), 1),
+            'avg_cpu_rss_mb':  round(float(np.mean(cpu_peaks)), 1),
+            'final_gpu_peak_mb': gpu_peaks[-1],
+            'final_cpu_rss_mb':  cpu_peaks[-1],
+        }
+
+# ──────────────────────────────────────────────
+# 混淆矩阵绘图 & 保存
+# ──────────────────────────────────────────────
+def save_confusion_matrix(cm, class_names, save_path):
+    """保存混淆矩阵为 JSON + PNG，训练后调用，不影响速度"""
+    # JSON
+    json_path = save_path.replace('.png', '.json') if save_path.endswith('.png') else save_path + '.json'
+    with open(json_path, 'w') as f:
+        json.dump({
+            'matrix': cm.tolist(),
+            'class_names': class_names,
+        }, f, indent=4)
+
+    # PNG
+    plt.figure(figsize=(max(8, len(class_names)), max(6, len(class_names) - 1)))
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+                xticklabels=class_names, yticklabels=class_names,
+                cbar_kws={'label': 'Count'})
+    plt.xlabel('Predicted', fontweight='bold', fontsize=12)
+    plt.ylabel('True', fontweight='bold', fontsize=12)
+    plt.title('Confusion Matrix', fontweight='bold', fontsize=14)
+    plt.tight_layout()
+    plt.savefig(save_path, dpi=200, bbox_inches='tight')
+    plt.close()
+
+# ──────────────────────────────────────────────
+# 吞吐量测试
+# ──────────────────────────────────────────────
+def measure_throughput(model, device, input_size=(3,224,224), batch_size=32,
+                       warmup=10, iterations=50):
+    model.eval()
+    x = torch.randn(batch_size, *input_size).to(device)
+    for _ in range(warmup):
+        with torch.no_grad(): _ = model(x)
+    if device.type == 'cuda': torch.cuda.synchronize()
+    t0 = time.time()
+    for _ in range(iterations):
+        with torch.no_grad(): _ = model(x)
+    if device.type == 'cuda': torch.cuda.synchronize()
+    elapsed = time.time() - t0
+    return {
+        'throughput(img/s)': round(batch_size * iterations / elapsed, 1),
+        'latency_ms': round(elapsed / iterations * 1000, 2),
+    }
+
+# ──────────────────────────────────────────────
+# validate 增加 per_class_metrics
+# ──────────────────────────────────────────────
+@torch.no_grad()
+def validate(model, val_loader, criterion, device, class_names=None):
+    model.eval()
+    total_loss = correct = total = 0
+    all_preds, all_targets = [], []
+
+    pbar = tqdm(val_loader, desc='Validation')
+    for inputs, targets in pbar:
+        inputs, targets = inputs.to(device), targets.to(device)
+        outputs = model(inputs); loss = criterion(outputs, targets)
+        total_loss += loss.item()
+        _, predicted = outputs.max(1)
+        total += targets.size(0); correct += predicted.eq(targets).sum().item()
+        all_preds.extend(predicted.cpu().numpy())
+        all_targets.extend(targets.cpu().numpy())
+        pbar.set_postfix({'Loss': f'{total_loss/(pbar.n+1):.4f}',
+                          'Acc': f'{100.*correct/total:.2f}%'})
+
+    accuracy = accuracy_score(all_targets, all_preds)
+    precision = precision_score(all_targets, all_preds, average='macro', zero_division=0)
+    recall = recall_score(all_targets, all_preds, average='macro', zero_division=0)
+    f1 = f1_score(all_targets, all_preds, average='macro', zero_division=0)
+    class_report = classification_report(all_targets, all_preds, output_dict=True, zero_division=0)
+    cm = confusion_matrix(all_targets, all_preds)
+
+    per_class = {}
+    if class_names:
+        for i, name in enumerate(class_names):
+            key = str(i)
+            if key in class_report:
+                per_class[name] = {
+                    'precision': round(class_report[key]['precision'], 4),
+                    'recall':    round(class_report[key]['recall'], 4),
+                    'f1_score':  round(class_report[key]['f1-score'], 4),
+                    'support':   class_report[key]['support'],
+                }
+
+    return {
+        'val_loss': total_loss / len(val_loader),
+        'val_acc': accuracy, 'val_f1': f1,
+        'val_precision': precision, 'val_recall': recall,
+        'classification_report': class_report, 'confusion_matrix': cm,
+        'per_class_metrics': per_class,
+    }
+
+# ──────────────────────────────────────────────
+# train_one_epoch (移除了Mixup/Cutmix)
+# ──────────────────────────────────────────────
+def train_one_epoch(model, train_loader, optimizer, criterion, scaler, device,
+                   time_tracker=None):
+    model.train()
+    total_loss = correct = total = 0
+    all_preds, all_targets = [], []
+
+    pbar = tqdm(train_loader, desc='Training')
+    for batch_idx, (inputs, targets) in enumerate(pbar):
+        if time_tracker: time_tracker.start_batch()
+        inputs, targets = inputs.to(device), targets.to(device)
+
+        optimizer.zero_grad()
+        with autocast():
+            outputs = model(inputs)
+            loss = criterion(outputs, targets)
+        scaler.scale(loss).backward(); scaler.step(optimizer); scaler.update()
+
+        total_loss += loss.item()
+        _, predicted = outputs.max(1); total += targets.size(0)
+        correct += predicted.eq(targets).sum().item()
+        all_preds.extend(predicted.cpu().numpy())
+        all_targets.extend(targets.cpu().numpy())
+        pbar.set_postfix({'Loss': f'{total_loss/(batch_idx+1):.4f}',
+                          'Acc': f'{100.*correct/total:.2f}%'})
+        if time_tracker: time_tracker.end_batch()
+
+    train_f1 = f1_score(all_targets, all_preds, average='macro', zero_division=0) if all_targets else 0.0
+    return {'train_loss': total_loss/len(train_loader),
+            'train_acc': correct/total, 'train_f1': train_f1}
+
+# ──────────────────────────────────────────────
+# 单折训练 — 增加混淆矩阵 + 内存记录
+# ──────────────────────────────────────────────
+def train_single_fold(config, device, train_loader, val_loader, class_names,
+                      save_dir, fold_tag=''):
+    os.makedirs(save_dir, exist_ok=True)
+    model = build_soilnet_hybrid(num_classes=config['num_classes']).to(device)
+    criterion = nn.CrossEntropyLoss()
+    optimizer = optim.AdamW(model.parameters(), lr=config['lr'], weight_decay=config['weight_decay'])
+    scaler = GradScaler()
+    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=config['epochs'])
+    time_tracker = TimeTracker()
+    mem_tracker = MemoryTracker(device)
+
+    # CSV 含 per-class + memory 列
+    csv_path = os.path.join(save_dir, 'training_metrics.csv')
+    csv_hdr = ['epoch','train_loss','val_loss','train_acc','val_acc',
+               'train_f1','val_f1','val_precision','val_recall','lr',
+               'gpu_peak_mb','cpu_rss_mb']
+    for c in class_names:
+        csv_hdr += [f'{c}_prec', f'{c}_rec', f'{c}_f1']
+
+    history = {k: [] for k in csv_hdr}
+    with open(csv_path, 'w', newline='') as f:
+        csv.writer(f).writerow(csv_hdr)
+
+    best_val_acc, best_pcm, best_cm = 0.0, None, None
+
+    for epoch in range(1, config['epochs'] + 1):
+        time_tracker.start_epoch()
+        mem_tracker.reset_epoch()
+
+        tm = train_one_epoch(model, train_loader, optimizer, criterion, scaler,
+                             device, time_tracker)
+        vm = validate(model, val_loader, criterion, device, class_names)
+        scheduler.step(); lr_now = optimizer.param_groups[0]['lr']
+
+        gpu_mb, cpu_mb = mem_tracker.record_epoch()
+        epoch_time = time_tracker.end_epoch()
+
+        # 写 CSV（含 per-class + memory）
+        row = [epoch, tm['train_loss'], vm['val_loss'], tm['train_acc'], vm['val_acc'],
+               tm['train_f1'], vm['val_f1'], vm['val_precision'], vm['val_recall'], lr_now,
+               gpu_mb, cpu_mb]
+        for c in class_names:
+            pm = vm['per_class_metrics'].get(c, {})
+            row += [pm.get('precision',''), pm.get('recall',''), pm.get('f1_score','')]
+        with open(csv_path, 'a', newline='') as f:
+            csv.writer(f).writerow(row)
+
+        print(f"{fold_tag}Epoch {epoch}/{config['epochs']} ({epoch_time:.1f}s)  "
+              f"TrL {tm['train_loss']:.4f} VaL {vm['val_loss']:.4f}  "
+              f"TrA {tm['train_acc']:.4f} VaA {vm['val_acc']:.4f}  "
+              f"VaF1 {vm['val_f1']:.4f}  LR {lr_now:.2e}  "
+              f"GPU {gpu_mb:.0f}MB CPU {cpu_mb:.0f}MB")
+
+        if vm['val_acc'] > best_val_acc:
+            best_val_acc = vm['val_acc']
+            best_pcm = vm['per_class_metrics']
+            best_cm = vm['confusion_matrix']
+            torch.save(model.state_dict(),
+                       os.path.join(save_dir, f'best_model_{best_val_acc:.4f}.pth'))
+            with open(os.path.join(save_dir, 'best_per_class.json'), 'w') as f:
+                json.dump(best_pcm, f, indent=4)
+            save_confusion_matrix(best_cm, class_names, os.path.join(save_dir, 'best_confusion_matrix.png'))
+
+    # 训练结束后用最佳模型重新验证，保存最终混淆矩阵
+    model.load_state_dict(torch.load(
+        os.path.join(save_dir, f'best_model_{best_val_acc:.4f}.pth'),
+        map_location=device))
+    final_vm = validate(model, val_loader, criterion, device, class_names)
+    save_confusion_matrix(final_vm['confusion_matrix'], class_names,
+                          os.path.join(save_dir, 'final_confusion_matrix.png'))
+
+    time_stats = time_tracker.get_stats()
+    mem_stats = mem_tracker.get_stats()
+    tp = measure_throughput(model, device, batch_size=config['batch_size'])
+
+    # 保存内存统计
+    with open(os.path.join(save_dir, 'memory_stats.json'), 'w') as f:
+        json.dump(mem_stats, f, indent=4)
+    with open(os.path.join(save_dir, 'throughput.json'), 'w') as f:
+        json.dump(tp, f, indent=4)
+    print(f"{fold_tag}Throughput: {tp}")
+    print(f"{fold_tag}Memory: Peak GPU {mem_stats.get('peak_gpu_mb',0):.0f}MB, "
+          f"Peak CPU {mem_stats.get('peak_cpu_mb',0):.0f}MB")
+
+    return best_val_acc, best_pcm, time_stats, tp, mem_stats
+
+# ──────────────────────────────────────────────
+# 5 折交叉验证 — 增加混淆矩阵 + 内存
+# ──────────────────────────────────────────────
+def run_cross_validation(config, device):
+    print(f"\n{'#'*70}\n  5-Fold Stratified CV — {config['num_classes']} classes\n{'#'*70}")
+
+    # 仅保留基本数据增强：随机裁剪、水平/垂直翻转、归一化
+    train_tf = transforms.Compose([
+        transforms.RandomResizedCrop(224),
+        transforms.RandomHorizontalFlip(),
+        transforms.RandomVerticalFlip(),
+        transforms.ToTensor(),
+        transforms.Normalize([0.485,0.456,0.406],[0.229,0.224,0.225]),
+    ])
+    val_tf = transforms.Compose([
+        transforms.Resize(256), transforms.CenterCrop(224), transforms.ToTensor(),
+        transforms.Normalize([0.485,0.456,0.406],[0.229,0.224,0.225]),
+    ])
+
+    train_path = os.path.join(config['data_path'], 'train')
+    val_path   = os.path.join(config['data_path'], 'val')
+    class_names = datasets.ImageFolder(train_path).classes
+
+    ds_tr_aug   = datasets.ImageFolder(train_path, transform=train_tf)
+    ds_tr_plain = datasets.ImageFolder(train_path, transform=val_tf)
+    has_val = os.path.exists(val_path) and len(os.listdir(val_path)) > 0
+    if has_val:
+        ds_va_aug   = datasets.ImageFolder(val_path, transform=train_tf)
+        ds_va_plain = datasets.ImageFolder(val_path, transform=val_tf)
+        combined_aug   = ConcatDataset([ds_tr_aug, ds_va_aug])
+        combined_plain = ConcatDataset([ds_tr_plain, ds_va_plain])
+        all_targets = ([y for _,y in ds_tr_aug.samples] +
+                       [y for _,y in ds_va_aug.samples])
+    else:
+        combined_aug, combined_plain = ds_tr_aug, ds_tr_plain
+        all_targets = [y for _,y in ds_tr_aug.samples]
+
+    skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=config['seed'])
+    indices = np.arange(len(all_targets))
+    cv_dir = f"cv_results_{time.strftime('%Y%m%d_%H%M%S')}"
+    fold_accs, fold_tps, fold_mems = [], [], []
+    fold_cms = []
+
+    for fold, (tr_idx, va_idx) in enumerate(skf.split(indices, np.array(all_targets))):
+        print(f"\n{'='*60}\n  Fold {fold+1}/5  train={len(tr_idx)} val={len(va_idx)}\n{'='*60}")
+        set_seed(config['seed'] + fold)
+
+        train_sub = Subset(combined_aug,   tr_idx.tolist())
+        val_sub   = Subset(combined_plain, va_idx.tolist())
+        tl = DataLoader(train_sub, batch_size=config['batch_size'], shuffle=True,  num_workers=4, pin_memory=True)
+        vl = DataLoader(val_sub,   batch_size=config['batch_size'], shuffle=False, num_workers=4, pin_memory=True)
+
+        fold_dir = os.path.join(cv_dir, f'fold_{fold+1}')
+        best_acc, best_pcm, ts, tp, mem = train_single_fold(
+            config, device, tl, vl, class_names, fold_dir,
+            fold_tag=f'[F{fold+1}] ')
+        fold_accs.append(best_acc); fold_tps.append(tp)
+        fold_mems.append(mem)
+
+        # 读取该折最终混淆矩阵
+        cm_json = os.path.join(fold_dir, 'final_confusion_matrix.json')
+        if os.path.exists(cm_json):
+            with open(cm_json) as f:
+                fold_cms.append(json.load(f)['matrix'])
+
+    # 汇总混淆矩阵（取平均）
+    avg_cm = None
+    if fold_cms:
+        avg_cm = np.mean([np.array(c) for c in fold_cms], axis=0).astype(int).tolist()
+
+    # CV 汇总
+    summary = {
+        'fold_accs': fold_accs,
+        'mean_acc': float(np.mean(fold_accs)),
+        'std_acc':  float(np.std(fold_accs)),
+        'avg_throughput': np.mean([t['throughput(img/s)'] for t in fold_tps]),
+        'avg_latency_ms': np.mean([t['latency_ms'] for t in fold_tps]),
+        'avg_peak_gpu_mb': round(np.mean([m['peak_gpu_mb'] for m in fold_mems]), 1),
+        'avg_peak_cpu_mb': round(np.mean([m['peak_cpu_mb'] for m in fold_mems]), 1),
+    }
+    os.makedirs(os.path.join(cv_dir, 'summary'), exist_ok=True)
+    with open(os.path.join(cv_dir, 'summary', 'cv_summary.json'), 'w') as f:
+        json.dump(summary, f, indent=4)
+
+    # 保存平均混淆矩阵
+    if avg_cm:
+        save_confusion_matrix(np.array(avg_cm), class_names,
+                              os.path.join(cv_dir, 'summary', 'cv_avg_confusion_matrix.png'))
+        with open(os.path.join(cv_dir, 'summary', 'cv_avg_confusion_matrix.json'), 'w') as f:
+            json.dump({'matrix': avg_cm, 'class_names': class_names,
+                       'note': 'Averaged across 5 folds (rounded to int)'}, f, indent=4)
+
+    print(f"\n{'#'*70}\n  CV Result: {summary['mean_acc']:.4f} ± {summary['std_acc']:.4f}")
+    for i, a in enumerate(fold_accs):
+        print(f"  Fold {i+1}: {a:.4f}  |  Throughput: {fold_tps[i]}  |  "
+              f"Peak GPU: {fold_mems[i]['peak_gpu_mb']:.0f}MB  "
+              f"Peak CPU: {fold_mems[i]['peak_cpu_mb']:.0f}MB")
+    print(f"  Avg Throughput: {summary['avg_throughput']:.1f} img/s  "
+          f"Avg Latency: {summary['avg_latency_ms']:.2f} ms")
+    print(f"  Avg Peak GPU: {summary['avg_peak_gpu_mb']:.0f}MB  "
+          f"Avg Peak CPU: {summary['avg_peak_cpu_mb']:.0f}MB")
+    print(f"{'#'*70}")
+    return summary
+
+# ──────────────────────────────────────────────
+# main
+# ──────────────────────────────────────────────
+def main():
+    config = {
+        'data_path': 'Soil_split',
+        'num_classes': 8,
+        'epochs': 300,
+        'batch_size': 32,
+        'lr': 3e-4,
+        'weight_decay': 1e-4,
+        'seed': 42,
+        'save_dir': 'results',
+        'use_cv': True,
+    }
+
+    set_seed(config['seed'])
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(f"Device: {device}")
+
+    if config['use_cv']:
+        return run_cross_validation(config, device)
+
+    # 仅保留基本数据增强：随机裁剪、水平/垂直翻转、归一化
+    train_transform = transforms.Compose([
+        transforms.RandomResizedCrop(224),
+        transforms.RandomHorizontalFlip(),
+        transforms.RandomVerticalFlip(),
+        transforms.ToTensor(),
+        transforms.Normalize([0.485,0.456,0.406],[0.229,0.224,0.225]),
+    ])
+    val_transform = transforms.Compose([
+        transforms.Resize(256), transforms.CenterCrop(224), transforms.ToTensor(),
+        transforms.Normalize([0.485,0.456,0.406],[0.229,0.224,0.225]),
+    ])
+
+    train_dataset = datasets.ImageFolder(os.path.join(config['data_path'],'train'), train_transform)
+    val_dataset   = datasets.ImageFolder(os.path.join(config['data_path'],'val'),   val_transform)
+    class_names   = train_dataset.classes
+
+    train_loader = DataLoader(train_dataset, batch_size=config['batch_size'],
+                              shuffle=True, num_workers=4, pin_memory=True)
+    val_loader   = DataLoader(val_dataset,   batch_size=config['batch_size'],
+                              shuffle=False, num_workers=4, pin_memory=True)
+
+    best_val_acc, best_pcm, time_stats, tp, mem_stats = train_single_fold(
+        config, device, train_loader, val_loader, class_names, config['save_dir'])
+
+    summary = {
+        'best_val_acc': float(best_val_acc),
+        'best_per_class': best_pcm,
+        'time_stats': time_stats,
+        'throughput': tp,
+        'memory': mem_stats,
+    }
+    with open(os.path.join(config['save_dir'], 'final_summary.json'), 'w') as f:
+        json.dump(summary, f, indent=4, default=str)
+
+    print(f"\nTraining done! Best Acc: {best_val_acc:.4f}")
+    print(f"Throughput: {tp}")
+    print(f"Memory: Peak GPU {mem_stats['peak_gpu_mb']:.0f}MB, "
+          f"Peak CPU {mem_stats['peak_cpu_mb']:.0f}MB")
+    if best_pcm:
+        print("\nPer-Class (best epoch):")
+        for name, m in best_pcm.items():
+            print(f"  {name:<20} P {m['precision']:.4f}  R {m['recall']:.4f}  "
+                  f"F1 {m['f1_score']:.4f}  N {m['support']}")
+
+if __name__ == "__main__":
+    main()
