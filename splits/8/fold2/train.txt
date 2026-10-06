@@ -1,0 +1,1553 @@
+train/Alluvial soil/Alluvial_13.jpg
+train/Alluvial soil/Alluvial_14.jpg
+train/Alluvial soil/Alluvial_17.jpg
+train/Alluvial soil/Alluvial_19.jpg
+train/Alluvial soil/Alluvial_23.jpg
+train/Alluvial soil/Alluvial_27.jpg
+train/Alluvial soil/Alluvial_28.jpg
+train/Alluvial soil/Alluvial_30.jpg
+train/Alluvial soil/Alluvial_31.jpg
+train/Alluvial soil/Alluvial_32.jpg
+train/Alluvial soil/Alluvial_33.jpg
+train/Alluvial soil/Alluvial_34 - Copy.jpg
+train/Alluvial soil/Alluvial_35 - Copy.jpg
+train/Alluvial soil/Alluvial_35.jpg
+train/Alluvial soil/Alluvial_36.jpg
+train/Alluvial soil/Alluvial_40.jpg
+train/Alluvial soil/Alluvial_41.jpg
+train/Alluvial soil/Alluvial_43.jpg
+train/Alluvial soil/Alluvial_44.jpg
+train/Alluvial soil/Alluvial_47.jpg
+train/Alluvial soil/Alluvial_50.jpg
+train/Alluvial soil/Copy of 1000_F_240425429_YL91trtDxXQl8L0OKP7zyngeSb63olAC.jpg
+train/Alluvial soil/Copy of Alluvial-soil-distribution-in-India.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0018.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0020.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0022.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0023.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0024.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0026.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0027.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0029.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0034.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0038.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0039.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-06-33.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-08-33.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-08-36.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-09-20.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-09-31.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-09-35.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-09-39.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-09-42.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-09-46.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-09-49.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-09-53.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-10-15.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-10-24.jpg
+train/Alluvial soil/IMG-20220531-WA0019.jpg
+train/Alluvial soil/IMG-20220531-WA0020.jpg
+train/Alluvial soil/IMG-20220531-WA0021.jpg
+train/Alluvial soil/IMG-20220531-WA0022.jpg
+train/Alluvial soil/IMG-20220531-WA0023.jpg
+train/Alluvial soil/IMG-20220531-WA0024.jpg
+train/Alluvial soil/IMG-20220531-WA0026.jpg
+train/Alluvial soil/IMG-20220531-WA0027.jpg
+train/Alluvial soil/IMG-20220531-WA0029.jpg
+train/Alluvial soil/IMG-20220531-WA0030.jpg
+train/Alluvial soil/IMG-20220531-WA0031.jpg
+train/Alluvial soil/IMG-20220531-WA0034.jpg
+train/Alluvial soil/IMG-20220531-WA0038.jpg
+train/Alluvial soil/IMG-20220531-WA0039.jpg
+train/Alluvial soil/photo_2022-06-01_07-06-33.jpg
+train/Alluvial soil/photo_2022-06-01_07-08-33.jpg
+train/Alluvial soil/photo_2022-06-01_07-08-36.jpg
+train/Alluvial soil/photo_2022-06-01_07-09-20.jpg
+train/Alluvial soil/photo_2022-06-01_07-09-27.jpg
+train/Alluvial soil/photo_2022-06-01_07-09-31.jpg
+train/Alluvial soil/photo_2022-06-01_07-09-35.jpg
+train/Alluvial soil/photo_2022-06-01_07-09-42.jpg
+train/Alluvial soil/photo_2022-06-01_07-09-46.jpg
+train/Alluvial soil/photo_2022-06-01_07-09-49.jpg
+train/Alluvial soil/photo_2022-06-01_07-10-12.jpg
+train/Alluvial soil/photo_2022-06-01_07-10-15.jpg
+train/Alluvial soil/photo_2022-06-01_07-10-24.jpg
+train/Alluvial soil/photo_2022-06-01_07-10-28.jpg
+val/Alluvial soil/Copy of IMG-20220531-WA0017.jpg
+val/Alluvial soil/Copy of IMG-20220531-WA0030.jpg
+val/Alluvial soil/Copy of IMG-20220531-WA0031.jpg
+val/Alluvial soil/Copy of photo_2022-06-01_07-09-27.jpg
+val/Alluvial soil/IMG-20220531-WA0017.jpg
+val/Alluvial soil/IMG-20220531-WA0018.jpg
+val/Alluvial soil/photo_2022-06-01_07-09-39.jpg
+val/Alluvial soil/photo_2022-06-01_07-09-53.jpg
+val/Alluvial soil/photo_2022-06-01_07-10-17.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0040.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-09-14.jpg
+train/Alluvial soil/photo_2022-06-01_07-09-14.jpg
+val/Alluvial soil/IMG-20220531-WA0040.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0041.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0043.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0045.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0046.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0049.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0050.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0052.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-08-26.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-08-29.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-08-40.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-08-43.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-08-50.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-08-57.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-09-04.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-09-07.jpg
+train/Alluvial soil/IMG-20220531-WA0041.jpg
+train/Alluvial soil/IMG-20220531-WA0045.jpg
+train/Alluvial soil/IMG-20220531-WA0046.jpg
+train/Alluvial soil/IMG-20220531-WA0047.jpg
+train/Alluvial soil/IMG-20220531-WA0049.jpg
+train/Alluvial soil/IMG-20220531-WA0051.jpg
+train/Alluvial soil/photo_2022-06-01_07-08-26.jpg
+train/Alluvial soil/photo_2022-06-01_07-08-40.jpg
+train/Alluvial soil/photo_2022-06-01_07-08-43.jpg
+train/Alluvial soil/photo_2022-06-01_07-08-50.jpg
+train/Alluvial soil/photo_2022-06-01_07-08-57.jpg
+train/Alluvial soil/photo_2022-06-01_07-09-04.jpg
+train/Alluvial soil/photo_2022-06-01_07-09-07.jpg
+train/Alluvial soil/photo_2022-06-01_07-09-11.jpg
+val/Alluvial soil/Copy of IMG-20220531-WA0047.jpg
+val/Alluvial soil/Copy of IMG-20220531-WA0051.jpg
+val/Alluvial soil/Copy of photo_2022-06-01_07-09-11.jpg
+val/Alluvial soil/IMG-20220531-WA0043.jpg
+val/Alluvial soil/IMG-20220531-WA0050.jpg
+val/Alluvial soil/IMG-20220531-WA0052.jpg
+val/Alluvial soil/photo_2022-06-01_07-08-29.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0048.jpg
+train/Alluvial soil/IMG-20220531-WA0048.jpg
+train/Alluvial soil/photo_2022-06-01_07-08-46.jpg
+val/Alluvial soil/Copy of photo_2022-06-01_07-08-46.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0053.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0054.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0055.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0059.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0065.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-07-41.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-08-00.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-08-03.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-08-07.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-08-10.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-08-18.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-08-22.jpg
+train/Alluvial soil/IMG-20220531-WA0053.jpg
+train/Alluvial soil/IMG-20220531-WA0054.jpg
+train/Alluvial soil/IMG-20220531-WA0056.jpg
+train/Alluvial soil/IMG-20220531-WA0057.jpg
+train/Alluvial soil/IMG-20220531-WA0065.jpg
+train/Alluvial soil/photo_2022-06-01_07-08-00.jpg
+train/Alluvial soil/photo_2022-06-01_07-08-03.jpg
+train/Alluvial soil/photo_2022-06-01_07-08-18.jpg
+val/Alluvial soil/Copy of IMG-20220531-WA0056.jpg
+val/Alluvial soil/Copy of IMG-20220531-WA0057.jpg
+val/Alluvial soil/Copy of IMG-20220531-WA0058.jpg
+val/Alluvial soil/Copy of photo_2022-06-01_07-08-14.jpg
+val/Alluvial soil/IMG-20220531-WA0055.jpg
+val/Alluvial soil/IMG-20220531-WA0058.jpg
+val/Alluvial soil/IMG-20220531-WA0059.jpg
+val/Alluvial soil/photo_2022-06-01_07-07-41.jpg
+val/Alluvial soil/photo_2022-06-01_07-08-07.jpg
+val/Alluvial soil/photo_2022-06-01_07-08-10.jpg
+val/Alluvial soil/photo_2022-06-01_07-08-14.jpg
+val/Alluvial soil/photo_2022-06-01_07-08-22.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0060.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0061.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0062.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0063.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0064.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0068.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-07-11.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-07-45.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-07-48.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-07-56.jpg
+train/Alluvial soil/IMG-20220531-WA0060.jpg
+train/Alluvial soil/IMG-20220531-WA0061.jpg
+train/Alluvial soil/IMG-20220531-WA0062.jpg
+train/Alluvial soil/IMG-20220531-WA0063.jpg
+train/Alluvial soil/IMG-20220531-WA0064.jpg
+train/Alluvial soil/IMG-20220531-WA0068.jpg
+train/Alluvial soil/photo_2022-06-01_07-07-37.jpg
+train/Alluvial soil/photo_2022-06-01_07-07-45.jpg
+train/Alluvial soil/photo_2022-06-01_07-07-48.jpg
+train/Alluvial soil/photo_2022-06-01_07-07-52.jpg
+train/Alluvial soil/photo_2022-06-01_07-07-56.jpg
+val/Alluvial soil/Copy of photo_2022-06-01_07-07-37.jpg
+val/Alluvial soil/Copy of photo_2022-06-01_07-07-52.jpg
+val/Alluvial soil/photo_2022-06-01_07-07-11.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0073.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-06-57.jpg
+train/Alluvial soil/IMG-20220531-WA0072.jpg
+train/Alluvial soil/photo_2022-06-01_07-06-52.jpg
+train/Alluvial soil/photo_2022-06-01_07-06-57.jpg
+val/Alluvial soil/Copy of IMG-20220531-WA0072.jpg
+val/Alluvial soil/Copy of photo_2022-06-01_07-06-52.jpg
+val/Alluvial soil/IMG-20220531-WA0073.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0074.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0076.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0077.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0080.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0082.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-04-46.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-06-23.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-06-37.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-06-41.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-06-48.jpg
+train/Alluvial soil/IMG-20220531-WA0074.jpg
+train/Alluvial soil/IMG-20220531-WA0076.jpg
+train/Alluvial soil/IMG-20220531-WA0082.jpg
+train/Alluvial soil/photo_2022-06-01_07-04-46.jpg
+train/Alluvial soil/photo_2022-06-01_07-06-23.jpg
+train/Alluvial soil/photo_2022-06-01_07-06-48.jpg
+val/Alluvial soil/IMG-20220531-WA0077.jpg
+val/Alluvial soil/IMG-20220531-WA0080.jpg
+val/Alluvial soil/photo_2022-06-01_07-06-41.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0078.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0081.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0088.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0089.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0093.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-05-32.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-05-44.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-05-56.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-06-11.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-06-15.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-06-18.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-06-30.jpg
+train/Alluvial soil/IMG-20220531-WA0078.jpg
+train/Alluvial soil/IMG-20220531-WA0081.jpg
+train/Alluvial soil/IMG-20220531-WA0087.jpg
+train/Alluvial soil/IMG-20220531-WA0088.jpg
+train/Alluvial soil/IMG-20220531-WA0089.jpg
+train/Alluvial soil/IMG-20220531-WA0093.jpg
+train/Alluvial soil/photo_2022-06-01_07-05-32.jpg
+train/Alluvial soil/photo_2022-06-01_07-05-44.jpg
+train/Alluvial soil/photo_2022-06-01_07-05-56.jpg
+train/Alluvial soil/photo_2022-06-01_07-06-11.jpg
+train/Alluvial soil/photo_2022-06-01_07-06-15.jpg
+train/Alluvial soil/photo_2022-06-01_07-06-30.jpg
+val/Alluvial soil/Copy of IMG-20220531-WA0087.jpg
+val/Alluvial soil/Copy of photo_2022-06-01_07-06-07.jpg
+val/Alluvial soil/photo_2022-06-01_07-06-07.jpg
+val/Alluvial soil/photo_2022-06-01_07-06-18.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0090.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0092.jpg
+train/Alluvial soil/Copy of IMG-20220531-WA0094.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-04-38.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-05-40.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-05-48.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-05-52.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-06-00.jpg
+train/Alluvial soil/Copy of photo_2022-06-01_07-06-04.jpg
+train/Alluvial soil/IMG-20220531-WA0086.jpg
+train/Alluvial soil/IMG-20220531-WA0091.jpg
+train/Alluvial soil/IMG-20220531-WA0094.jpg
+train/Alluvial soil/photo_2022-06-01_07-04-38.jpg
+train/Alluvial soil/photo_2022-06-01_07-05-40.jpg
+train/Alluvial soil/photo_2022-06-01_07-05-48.jpg
+train/Alluvial soil/photo_2022-06-01_07-05-52.jpg
+train/Alluvial soil/photo_2022-06-01_07-06-00.jpg
+train/Alluvial soil/photo_2022-06-01_07-06-04.jpg
+val/Alluvial soil/Copy of IMG-20220531-WA0086.jpg
+val/Alluvial soil/Copy of IMG-20220531-WA0091.jpg
+val/Alluvial soil/IMG-20220531-WA0090.jpg
+val/Alluvial soil/IMG-20220531-WA0092.jpg
+train/Alluvial soil/Copy of Photograph-showing-the-presence-of-alluvial-soil-along-stream-course-dry-near-Patlodha_Q640.jpg
+train/Alluvial soil/Copy of images96.jpg
+val/Alluvial soil/images96.jpg
+train/Alluvial soil/Copy of Sample10.180.jpg
+train/Alluvial soil/Copy of Sample10.30.jpg
+train/Alluvial soil/Copy of Sample10.60.jpg
+train/Alluvial soil/Copy of Sample11.0.jpg
+train/Alluvial soil/Copy of Sample11.60.jpg
+train/Alluvial soil/Copy of Sample13.150.jpg
+train/Alluvial soil/Sample13.150.jpg
+train/Alluvial soil/Copy of Sample13.180.jpg
+train/Alluvial soil/Sample13.180.jpg
+train/Alluvial soil/Copy of Sample13.90.jpg
+train/Alluvial soil/Copy of Sample9.120.jpg
+train/Alluvial soil/Copy of Sample9.180.jpg
+train/Alluvial soil/Copy of alluvial-diamond-layers-mining-site-western-cape-south-africa-G8CR87.jpg
+train/Alluvial soil/Copy of alluvial-soil-1kg-green-era-original-imag4r54hhybzhqc.jpeg
+train/Alluvial soil/alluvial-soil-1kg-green-era-original-imag4r54hhybzhqc.jpeg
+train/Alluvial soil/image2 (2).jpeg
+val/Alluvial soil/Copy of image2 (2).jpeg
+val/Alluvial soil/image30 (2).jpeg
+train/Alluvial soil/Copy of alluvial-soil-1kg-green-era-original-imag4r54wbucymtp.jpeg
+val/Alluvial soil/alluvial-soil-1kg-green-era-original-imag4r54wbucymtp.jpeg
+train/Alluvial soil/Copy of alluvial-soil-profile-agricultural-land-260nw-1867228486.jpg
+train/Alluvial soil/alluvial-soil-profile-agricultural-land-260nw-1867228486.jpg
+train/Alluvial soil/images93.jpg
+val/Alluvial soil/alluvial-soil-profile-agricultural-land-600w-1867228486.jpg
+train/Alluvial soil/Copy of image3 (2).jpeg
+train/Alluvial soil/image3 (2).jpeg
+train/Alluvial soil/Copy of image6 (2).jpeg
+train/Alluvial soil/image6 (2).jpeg
+train/Alluvial soil/Copy of image7 (2).jpeg
+train/Alluvial soil/Copy of image7.jpeg
+train/Alluvial soil/Copy of images42.jpg
+val/Alluvial soil/images42.jpg
+train/Alluvial soil/Copy of images81.jpg
+train/Alluvial soil/OIP.3Kq1BfOflfo9AeJdczaMowHaEK.jpg
+train/Alluvial soil/OIP.LrCRAxHVn5zVy0k3GitUygHaD4.jpg
+train/Alluvial soil/OIP.dRFUggaIxBebiqqG13n0_AHaE6.jpg
+train/Alluvial soil/OIP.g1CkewGUpICmIzp9SBuyTAHaGz.jpg
+train/Alluvial soil/Sample11.120.jpg
+val/Alluvial soil/Copy of Sample11.120.jpg
+train/Alluvial soil/Sample11.150.jpg
+val/Alluvial soil/Copy of Sample11.150.jpg
+train/Alluvial soil/Sample13.30.jpg
+train/Alluvial soil/Sample13.60.jpg
+val/Alluvial soil/Copy of Sample13.60.jpg
+train/Alluvial soil/alluvial-soil-geographical-study-reference-260nw-1988780216.jpg
+train/Alluvial soil/alluvial-soil-geographical-study-reference-260nw-1992713210.jpg
+train/Alluvial soil/alluvial-soil-geographical-study-reference-600w-1992713210.jpg
+train/Alluvial soil/alluvial-soil-texture-agricultural-land-260nw-1867228120.jpg
+train/Alluvial soil/alluvial-soil-texture-agricultural-land-600w-1867228120.jpg
+train/Alluvial soil/alluvial-soils-ricker-2primefarmland-1200x675-1.jpg
+train/Alluvial soil/alluvialsoil_MH.jpg
+train/Alluvial soil/aug_0_1051.jpg
+train/Alluvial soil/aug_0_1349.jpg
+train/Alluvial soil/aug_0_1804.jpg
+train/Alluvial soil/aug_0_1963.jpg
+train/Alluvial soil/aug_0_2198.jpg
+train/Alluvial soil/aug_0_220.jpg
+train/Alluvial soil/aug_0_240.jpg
+train/Alluvial soil/aug_0_2572.jpg
+train/Alluvial soil/aug_0_2804.jpg
+train/Alluvial soil/aug_0_2874.jpg
+train/Alluvial soil/aug_0_3005.jpg
+train/Alluvial soil/aug_0_3420.jpg
+train/Alluvial soil/aug_0_3493.jpg
+train/Alluvial soil/aug_0_385.jpg
+train/Alluvial soil/aug_0_4373.jpg
+train/Alluvial soil/aug_0_4589.jpg
+train/Alluvial soil/aug_0_4723.jpg
+train/Alluvial soil/aug_0_4845.jpg
+train/Alluvial soil/aug_0_5080.jpg
+train/Alluvial soil/aug_0_5456.jpg
+train/Alluvial soil/aug_0_574.jpg
+train/Alluvial soil/aug_0_5752.jpg
+train/Alluvial soil/aug_0_5864.jpg
+train/Alluvial soil/aug_0_5948.jpg
+train/Alluvial soil/aug_0_6696.jpg
+train/Alluvial soil/aug_0_7025.jpg
+train/Alluvial soil/aug_0_7126.jpg
+train/Alluvial soil/aug_0_7156.jpg
+train/Alluvial soil/aug_0_716.jpg
+train/Alluvial soil/aug_0_7221.jpg
+train/Alluvial soil/aug_0_7303.jpg
+train/Alluvial soil/aug_0_7539.jpg
+train/Alluvial soil/aug_0_7812.jpg
+train/Alluvial soil/aug_0_8007.jpg
+train/Alluvial soil/aug_0_831.jpg
+train/Alluvial soil/aug_0_9172.jpg
+train/Alluvial soil/desktop_137249cc-6732-40b3-94e1-1381ad82c07f.jpg
+train/Alluvial soil/different-soil-types-are-found-in-different-states-of-the-country-1743087089.jpg
+train/Alluvial soil/echinochloa-barnyard-sprout-has-grown-260nw-1759820435.jpg
+train/Alluvial soil/fossilized-concretions-alluvial-sand-soil-260nw-1205780284.jpg
+train/Alluvial soil/image.jpeg
+train/Alluvial soil/images105.jpg
+train/Alluvial soil/images19 (2).jpg
+train/Alluvial soil/images77 (2).jpg
+train/Alluvial soil/images97.jpg
+val/Alluvial soil/images86.jpg
+train/Alluvial soil/india-agricultural-country-different-soil-260nw-1743087089.jpg
+train/Alluvial soil/india-agricultural-country-different-soil-600w-1743086732.jpg
+train/Alluvial soil/maxresdefault3.jpg
+train/Alluvial soil/natural-silty-soil-background-brown-260nw-184759979.jpg
+train/Alluvial soil/natural-silty-soil-background-brown-600w-184759979.jpg
+train/Alluvial soil/natural-silty-soil-background-brown-260nw-234187528.jpg
+train/Alluvial soil/natural-silty-soil-background-brown-600w-234187528.jpg
+train/Alluvial soil/natural-silty-soil-background-gray-260nw-184758788.jpg
+train/Alluvial soil/natural-silty-soil-background-gray-600w-184758788.jpg
+train/Alluvial soil/plowing-completed-after-completion-annual-260nw-1731441091.jpg
+train/Alluvial soil/regular-alluvium-soil-structures-on-260nw-595009385.jpg
+val/Alluvial soil/regular-alluvium-soil-structures-on-600w-595009385.jpg
+train/Andosol/andosol-001.jpg
+train/Andosol/andosol-005.jpg
+train/Andosol/andosol-007.jpg
+train/Andosol/andosol-010.jpg
+train/Andosol/andosol-012.jpg
+train/Andosol/andosol-015.jpg
+train/Andosol/andosol-018.jpg
+train/Andosol/andosol-019.jpg
+train/Andosol/andosol-021.jpg
+train/Andosol/andosol-023.jpg
+train/Andosol/andosol-024.jpg
+train/Andosol/andosol-025.jpg
+train/Andosol/andosol-026.jpg
+train/Andosol/andosol-027.jpg
+train/Andosol/andosol-029.jpg
+train/Andosol/andosol-031.jpg
+train/Andosol/andosol-035.jpg
+train/Andosol/andosol-037.jpg
+train/Andosol/andosol-042.jpg
+train/Andosol/andosol-044.jpg
+train/Andosol/andosol-045.jpg
+train/Andosol/andosol-048.jpg
+train/Andosol/andosol-054.jpg
+train/Andosol/andosol-057.jpg
+train/Andosol/andosol-058.jpg
+train/Andosol/andosol-060.jpg
+train/Andosol/andosol-062.jpg
+train/Andosol/andosol-066.jpg
+train/Andosol/andosol-068.jpg
+train/Andosol/andosol-069.jpg
+train/Andosol/andosol-070.jpg
+train/Andosol/andosol-071.jpg
+train/Andosol/andosol-072.jpg
+train/Andosol/andosol-073.jpg
+train/Andosol/andosol-075.jpg
+train/Andosol/andosol-076.jpg
+train/Andosol/andosol-079.jpg
+train/Andosol/andosol-081.jpg
+train/Andosol/andosol-082.jpg
+train/Andosol/andosol-083.jpg
+train/Andosol/andosol-085.jpg
+train/Andosol/andosol-086.jpg
+train/Andosol/andosol-087.jpg
+train/Andosol/andosol-090.jpg
+train/Andosol/andosol-092.jpg
+train/Andosol/andosol-097.jpg
+train/Andosol/andosol-098.jpg
+train/Andosol/andosol-099.jpg
+train/Andosol/andosol-100.jpg
+train/Andosol/andosol-101.jpg
+train/Andosol/andosol-103.jpg
+train/Andosol/andosol-105.jpg
+train/Andosol/andosol-109.jpg
+train/Black soil/1.jpg
+train/Black soil/10.jpg
+val/Black soil/Black_Soil_ (62).jpg
+train/Black soil/11.jpg
+train/Black soil/Black_Soil_ (61).jpg
+train/Black soil/13.jpg
+train/Black soil/Black_Soil_ (59).jpg
+train/Black soil/16.jpg
+train/Black soil/Black_Soil_ (56).jpg
+train/Black soil/19.jpg
+val/Black soil/Black_Soil_ (53).jpg
+train/Black soil/2.jpg
+train/Black soil/Black_Soil_ (70).jpg
+train/Black soil/20.jpg
+train/Black soil/Black_Soil_ (52).jpg
+train/Black soil/23.jpg
+train/Black soil/Black_Soil_ (49).jpg
+train/Black soil/24.jpg
+train/Black soil/Black_Soil_ (48).jpg
+train/Black soil/25.jpg
+train/Black soil/Black_Soil_ (47).jpg
+train/Black soil/26.jpg
+train/Black soil/Copy of images420(1).jpg
+val/Black soil/Black_Soil_ (46).jpg
+val/Black soil/Copy of images420.jpg
+train/Black soil/29.jpg
+train/Black soil/Black_Soil_ (43).jpg
+train/Black soil/3.jpg
+train/Black soil/Black_Soil_ (69).jpg
+train/Black soil/images430.jpg
+val/Black soil/Copy of images430.jpg
+train/Black soil/31.jpg
+train/Black soil/Black_Soil_ (41).jpg
+train/Black soil/32.jpg
+train/Black soil/Black_Soil_ (40).jpg
+train/Black soil/38.jpg
+train/Black soil/Black_Soil_ (36).jpg
+train/Black soil/40.jpg
+train/Black soil/Black_Soil_ (34).jpg
+train/Black soil/5.jpg
+train/Black soil/Black_Soil_ (67).jpg
+train/Black soil/6.jpg
+train/Black soil/Black_Soil_ (66).jpg
+train/Black soil/7.jpg
+train/Black soil/Black_Soil_ (65).jpg
+train/Black soil/8.jpg
+train/Black soil/Black_8.jpg
+train/Black soil/Black_Soil_ (64).jpg
+train/Black soil/9.jpg
+val/Black soil/Black_Soil_ (63).jpg
+train/Black soil/Black_1.jpg
+train/Black soil/Black_10.jpg
+train/Black soil/Black_12.jpg
+train/Black soil/Black_14.jpg
+train/Black soil/Black_15.jpg
+train/Black soil/Black_16.jpg
+train/Black soil/Black_19.jpg
+train/Black soil/Black_2.jpg
+train/Black soil/Black_20.jpg
+train/Black soil/Black_21.jpg
+train/Black soil/Black_22.jpg
+train/Black soil/Black_23.jpg
+train/Black soil/Black_24.jpg
+train/Black soil/Black_26.jpg
+train/Black soil/Black_27.jpg
+train/Black soil/Black_29.jpg
+train/Black soil/Black_3.jpg
+train/Black soil/Black_31.jpg
+train/Black soil/Black_32.jpg
+train/Black soil/Black_33.jpg
+train/Black soil/Black_34.jpg
+train/Black soil/Black_44.jpg
+train/Black soil/Black_36.jpg
+train/Black soil/Black_38.jpg
+train/Black soil/Black_39.jpg
+train/Black soil/Black_4.jpg
+train/Black soil/Black_41.jpg
+train/Black soil/Black_42.jpg
+train/Black soil/Black_43.jpg
+train/Black soil/Black_45.jpg
+train/Black soil/Black_46.jpg
+train/Black soil/Black_5.jpg
+train/Black soil/Black_6.jpg
+train/Black soil/Copy of Copy of indian-soils-6.jpg
+train/Black soil/Copy of indian-soils-6.jpg
+train/Black soil/indian-soils-6.jpg
+train/Black soil/Black_9.jpg
+train/Black soil/Black_Soil_ (11).jpg
+train/Black soil/Black_Soil_ (13).jpg
+train/Black soil/Black_Soil_ (14).jpg
+train/Black soil/Black_Soil_ (19).jpg
+train/Black soil/Black_Soil_ (2).jpg
+train/Black soil/Black_Soil_ (21).jpg
+train/Black soil/Black_Soil_ (22).jpg
+train/Black soil/Black_Soil_ (24).jpg
+train/Black soil/Black_Soil_ (25).jpg
+train/Black soil/Black_Soil_ (27).jpg
+train/Black soil/Black_Soil_ (28).jpg
+train/Black soil/Black_Soil_ (29).jpg
+train/Black soil/Black_Soil_ (3).jpg
+train/Black soil/Black_Soil_ (31).jpg
+train/Black soil/Black_Soil_ (33).jpg
+train/Black soil/Black_Soil_ (37).jpg
+val/Black soil/37.jpg
+train/Black soil/Black_Soil_ (4).jpg
+train/Black soil/Black_Soil_ (44).jpg
+val/Black soil/28.jpg
+train/Black soil/Black_Soil_ (54).jpg
+val/Black soil/18.jpg
+train/Black soil/Black_Soil_ (55).jpg
+val/Black soil/17.jpg
+train/Black soil/Black_Soil_ (58).jpg
+val/Black soil/14.jpg
+train/Black soil/Black_Soil_ (6).jpg
+train/Black soil/Black_Soil_ (60).jpg
+val/Black soil/12.jpg
+train/Black soil/Black_Soil_ (68).jpg
+train/Black soil/black-soil-texture-background-gardening-ideas-idea-planting-gardeners-171739558.jpg
+val/Black soil/4.jpg
+train/Black soil/Black_Soil_ (72).jpg
+train/Black soil/Black_Soil_ (73).jpg
+train/Black soil/Black_Soil_ (74).jpg
+train/Black soil/Black_Soil_ (8).jpg
+train/Black soil/Black_Soil_ (9).jpg
+train/Black soil/Copy of Copy of Sample7.30.jpg
+train/Black soil/Sample7.30.jpg
+val/Black soil/Copy of Sample7.30.jpg
+train/Black soil/Copy of Copy of images434.jpg
+train/Black soil/images434.jpg
+val/Black soil/Copy of images434.jpg
+train/Black soil/Copy of Copy of images435(1).jpg
+train/Black soil/Copy of Copy of images435.jpg
+train/Black soil/Copy of images408.jpg
+train/Black soil/Copy of images435(1).jpg
+train/Black soil/Copy of images435.jpg
+val/Black soil/Copy of images408(1).jpg
+train/Black soil/Copy of Copy of main-qimg-d58f1c16e4a7c754ec35d2b9f2ab47ac.webp
+train/Black soil/Copy of main-qimg-d58f1c16e4a7c754ec35d2b9f2ab47ac.webp
+train/Black soil/main-qimg-d58f1c16e4a7c754ec35d2b9f2ab47ac.webp
+train/Black soil/Copy of Sample4.30.jpg
+train/Black soil/Sample4.30.jpg
+train/Black soil/Copy of Sample7.0.jpg
+train/Black soil/Sample7.0.jpg
+val/Black soil/Copy of Copy of Sample7.0.jpg
+train/Black soil/Copy of image27(1).jpeg
+train/Black soil/Copy of image27.jpeg
+train/Black soil/image27.jpeg
+train/Black soil/Copy of images258(1).jpg
+train/Black soil/Copy of images258.jpg
+val/Black soil/images258.jpg
+train/Black soil/Copy of images267(1).jpg
+train/Black soil/Copy of images267.jpg
+train/Black soil/images267.jpg
+train/Black soil/Copy of images280(1).jpg
+train/Black soil/Copy of images280.jpg
+train/Black soil/images280.jpg
+train/Black soil/Copy of images281(1).jpg
+train/Black soil/Copy of images281.jpg
+train/Black soil/images281.jpg
+train/Black soil/Copy of images287(1).jpg
+train/Black soil/Copy of images287.jpg
+val/Black soil/depositphotos_113297290-stock-photo-black-soil-texture.jpg
+val/Black soil/images287.jpg
+train/Black soil/Copy of images298(1).jpg
+train/Black soil/images298.jpg
+val/Black soil/Copy of images298.jpg
+train/Black soil/Copy of images305(1).jpg
+train/Black soil/Copy of images305.jpg
+train/Black soil/images305.jpg
+train/Black soil/Copy of images347(1).jpg
+train/Black soil/Copy of images347.jpg
+train/Black soil/images347.jpg
+train/Black soil/Copy of images350.jpg
+train/Black soil/images350.jpg
+val/Black soil/Copy of images350(1).jpg
+train/Black soil/Copy of images363(1).jpg
+train/Black soil/images363.jpg
+val/Black soil/Copy of images363.jpg
+train/Black soil/Copy of images365(1).jpg
+train/Black soil/images365.jpg
+val/Black soil/Copy of images365.jpg
+train/Black soil/Copy of images371(1).jpg
+train/Black soil/images371.jpg
+val/Black soil/Copy of images371.jpg
+train/Black soil/Copy of images375(1).jpg
+train/Black soil/Copy of images375.jpg
+train/Black soil/images375.jpg
+train/Black soil/Copy of images386.jpg
+train/Black soil/images337.jpg
+train/Black soil/images386.jpg
+val/Black soil/Copy of images337(1).jpg
+val/Black soil/Copy of images337.jpg
+train/Black soil/Copy of images391(1).jpg
+train/Black soil/Copy of images391.jpg
+train/Black soil/images391.jpg
+train/Black soil/Copy of images392(1).jpg
+train/Black soil/Copy of images392.jpg
+train/Black soil/images392.jpg
+train/Black soil/Copy of images393(1).jpg
+train/Black soil/Copy of images393.jpg
+train/Black soil/images393.jpg
+train/Black soil/Copy of images394(1).jpg
+train/Black soil/Copy of images394.jpg
+train/Black soil/Copy of images396(1).jpg
+train/Black soil/Copy of images396.jpg
+train/Black soil/Copy of images406(1).jpg
+train/Black soil/Copy of images406.jpg
+train/Black soil/Copy of images418.jpg
+val/Black soil/Copy of images418(1).jpg
+val/Black soil/images396.jpg
+train/Black soil/Copy of images397(1).jpg
+train/Black soil/Copy of images397.jpg
+train/Black soil/Copy of images398(1).jpg
+train/Black soil/Copy of images398.jpg
+train/Black soil/images398.jpg
+train/Black soil/Copy of images399.jpg
+train/Black soil/images399.jpg
+train/Black soil/Copy of images400.jpg
+train/Black soil/images400.jpg
+train/Black soil/Copy of images403.jpg
+val/Black soil/images403.jpg
+train/Black soil/Copy of images404.jpg
+train/Black soil/images404.jpg
+train/Black soil/Copy of images405(1).jpg
+train/Black soil/Copy of images405.jpg
+train/Black soil/Copy of images409(1).jpg
+val/Black soil/Copy of images409.jpg
+train/Black soil/Copy of images413(1).jpg
+train/Black soil/Copy of images413.jpg
+train/Black soil/Copy of images416(1).jpg
+train/Black soil/Copy of images416.jpg
+train/Black soil/Copy of images417.jpg
+val/Black soil/Copy of images417(1).jpg
+train/Black soil/Copy of images419(1).jpg
+val/Black soil/Copy of images419.jpg
+train/Black soil/Copy of images421(1).jpg
+train/Black soil/Copy of images421.jpg
+train/Black soil/Copy of images422.jpg
+val/Black soil/Copy of images422(1).jpg
+train/Black soil/Copy of images423(1).jpg
+train/Black soil/Copy of images423.jpg
+train/Black soil/Copy of images424(1).jpg
+val/Black soil/Copy of images424.jpg
+train/Black soil/Copy of images425.jpg
+val/Black soil/Copy of images425(1).jpg
+train/Black soil/Copy of images428(1).jpg
+train/Black soil/Copy of images428.jpg
+train/Black soil/Copy of images431.jpg
+val/Black soil/Copy of images431(1).jpg
+train/Black soil/Copy of images432(1).jpg
+train/Black soil/Copy of images432.jpg
+train/Black soil/Copy of kalimitti2.jpg
+train/Black soil/kalimitti2.jpg
+val/Black soil/Copy of Copy of kalimitti2.jpg
+train/Black soil/Sample7.150.jpg
+train/Black soil/Sample7.180.jpg
+train/Black soil/Sample7.60.jpg
+train/Black soil/Sample7.90.jpg
+train/Black soil/black-earth-background-natural-soil-260nw-2068346966.jpg
+train/Black soil/black-ground-background-close-260nw-184414499.jpg
+train/Black soil/black-land-plant-background-top-260nw-1689095212.jpg
+train/Black soil/black-land-plant-background-top-260nw-1715884504.jpg
+train/Black soil/black-land-plant-background-top-260nw-1932861188.jpg
+train/Black soil/black-land-plant-isolated-on-260nw-1724620477.jpg
+train/Black soil/black-sand-texture-dark-soil-260nw-430890610.jpg
+train/Black soil/black-soil-close-up-agriculture-260nw-1167313222.jpg
+train/Black soil/black-soil-texture-260nw-79173829.jpg
+train/Black soil/black-soil-texture-background-260nw-298884596.jpg
+train/Black soil/closeup-plowed-field-fertile-black-260nw-1831062274.jpg
+train/Black soil/d-field-indian-farm-full-of-organic-soil-in-which-sowing-has-been-1760541305.jpg
+train/Black soil/dark-black-soil-texture-background-260nw-2203815427.jpg
+train/Black soil/dark-black-soil-texture-blackground-260nw-1140149915.jpg
+train/Black soil/fertil-soil-background-texture-close-260nw-613800197.jpg
+train/Black soil/fresh-soil-gardening-background-top-260nw-1471704209.jpg
+train/Black soil/ginkgo-leaf-on-ground-black-260nw-380461555.jpg
+train/Black soil/images433.jpg
+val/Black soil/Copy of images433.jpg
+train/Black soil/peat-moss-isolaetd-on-white-260nw-1935587986.jpg
+train/Black soil/photo_2022-06-01_07-07-32.jpg
+train/Black soil/selective-focus-on-little-seedling-260nw-390382129.jpg
+train/Black soil/single-young-plant-emerging-black-260nw-389823625.jpg
+train/Black soil/soil-260nw-41206792.jpg
+train/Black soil/soil-background-260nw-157471400.jpg
+train/Black soil/soil-texture-background-260nw-1065530900.jpg
+train/Black soil/soil-texture-background-fertile-planting-260nw-1903239241.jpg
+train/Black soil/soil-texture-background-seen-above-260nw-1345246001.jpg
+train/Black soil/textured-fertile-soil-background-gardening-260nw-1413270422.jpg
+train/Black soil/top-view-closeup-organic-black-260nw-1730742160.jpg
+train/Black soil/usually-growth-plant-contained-within-260nw-1761444233.jpg
+val/Black soil/usually-growth-plant-contained-within-600w-1761444233.jpg
+train/Clay soil/91714675-background-of-red-clay-the-real-desert-soil.jpg
+train/Clay soil/Copy of 91714675-background-of-red-clay-the-real-desert-soil.jpg
+train/Clay soil/94530057-red-clay-soil-on-nature-as-a-background-.jpg
+val/Clay soil/Copy of 94530057-red-clay-soil-on-nature-as-a-background-.jpg
+train/Clay soil/Bamboo_for_clay_soil_main.jpg
+train/Clay soil/Copy of Bamboo_for_clay_soil_main.jpg
+train/Clay soil/Clay-Soil(2).jpg
+train/Clay soil/Copy of Clay-Soil(2).jpg
+train/Clay soil/Clay_10.jpg
+train/Clay soil/Copy of cracked-clay-soil-12498989(1).jpg
+train/Clay soil/cracked-clay-soil-12498989.jpg
+val/Clay soil/Copy of cracked-clay-soil-12498989.jpg
+train/Clay soil/Clay_11.jpg
+train/Clay soil/Clay_12.jpg
+train/Clay soil/Clay_14.jpg
+train/Clay soil/Clay_15.jpg
+train/Clay soil/Clay_16.jpg
+train/Clay soil/Clay_17.jpg
+train/Clay soil/Clay_18.jpg
+train/Clay soil/Clay_19.jpg
+train/Clay soil/Clay_2.jpg
+train/Clay soil/Clay_24.jpg
+train/Clay soil/Clay_33.jpg
+train/Clay soil/Copy of clay-soil.jpg
+train/Clay soil/clay-soil.jpg
+train/Clay soil/Clay_26.jpg
+train/Clay soil/Clay_28.jpg
+train/Clay soil/Clay_31.jpg
+train/Clay soil/Clay_34.jpg
+train/Clay soil/Clay_35.jpg
+train/Clay soil/Clay_36.jpg
+train/Clay soil/Clay_37.jpg
+train/Clay soil/Clay_39.jpg
+train/Clay soil/Clay_4.jpg
+train/Clay soil/Clay_40.jpg
+train/Clay soil/Clay_41.jpg
+train/Clay soil/Clay_42.jpg
+train/Clay soil/Clay_43.jpg
+train/Clay soil/Clay_44.jpg
+train/Clay soil/Clay_45.jpg
+train/Clay soil/Clay_46.jpg
+train/Clay soil/Clay_5.jpg
+train/Clay soil/Clay_6.jpg
+train/Clay soil/Clay_Soil.jpg
+train/Clay soil/Copy of Clay_Soil.jpg
+train/Clay soil/Copy of Copy of Shovel-In-Clay-1-of-1-600x409.jpg
+train/Clay soil/Shovel-In-Clay-1-of-1-600x409.jpg
+val/Clay soil/Copy of Shovel-In-Clay-1-of-1-600x409.jpg
+train/Clay soil/Copy of Heres-How-To-Improve-Your-Clay-Soil-the-Easy-Way-FI.jpg
+train/Clay soil/Copy of images34(1).jpg
+train/Clay soil/Copy of images34.jpg
+train/Clay soil/Heres-How-To-Improve-Your-Clay-Soil-the-Easy-Way-FI.jpg
+train/Clay soil/images34.jpg
+val/Clay soil/Copy of Heres-How-To-Improve-Your-Clay-Soil-the-Easy-Way-FI(1).jpg
+train/Clay soil/Copy of Sample1.0.jpg
+val/Clay soil/Sample1.0.jpg
+train/Clay soil/Copy of Sample1.150.jpg
+train/Clay soil/Sample1.150.jpg
+train/Clay soil/Copy of Sample1.30.jpg
+train/Clay soil/Sample1.30.jpg
+train/Clay soil/Copy of Sample1.60.jpg
+train/Clay soil/Sample1.60.jpg
+train/Clay soil/Copy of Sample1.90.jpg
+train/Clay soil/Sample1.90.jpg
+train/Clay soil/Copy of Sample12.0.jpg
+train/Clay soil/Copy of Sample12.120.jpg
+train/Clay soil/Copy of Sample12.180.jpg
+train/Clay soil/Copy of Sample12.30.jpg
+train/Clay soil/Copy of Sample2.0.jpg
+val/Clay soil/Sample2.0.jpg
+train/Clay soil/Copy of Sample2.180.jpg
+val/Clay soil/Sample2.180.jpg
+train/Clay soil/Copy of Sample2.30.jpg
+train/Clay soil/Sample2.30.jpg
+train/Clay soil/Copy of Sample2.60.jpg
+train/Clay soil/Sample2.60.jpg
+train/Clay soil/Copy of Sample2.90.jpg
+train/Clay soil/Sample2.90.jpg
+train/Clay soil/Copy of Sample3.0.jpg
+train/Clay soil/Sample3.0.jpg
+train/Clay soil/Copy of Sample3.120.jpg
+train/Clay soil/Sample3.120.jpg
+train/Clay soil/Copy of Sample3.180.jpg
+train/Clay soil/Sample3.180.jpg
+train/Clay soil/Copy of Sample3.30.jpg
+train/Clay soil/Sample3.30.jpg
+train/Clay soil/Copy of Sample3.60.jpg
+train/Clay soil/Sample3.60.jpg
+train/Clay soil/Copy of Sample3.90.jpg
+train/Clay soil/Sample3.90.jpg
+train/Clay soil/Copy of clay-soil-cut-red-color-clay-clay-soil-cut-red-color-clay-184254602.jpg
+train/Clay soil/clay-soil-cut-red-color-clay-clay-soil-cut-red-color-clay-184254602.jpg
+train/Clay soil/Copy of clay-soil2.jpg
+train/Clay soil/clay-soil2.jpg
+train/Clay soil/Copy of clay-soils-2.jpg
+train/Clay soil/Copy of images43.jpg
+train/Clay soil/clay-soils-2.jpg
+train/Clay soil/images43.jpg
+val/Clay soil/Copy of images43(1).jpg
+train/Clay soil/Copy of clay.jpg
+train/Clay soil/clay.jpg
+train/Clay soil/Copy of depositphotos_5508133-stock-photo-dry-red-clay-soil-texture.jpg
+train/Clay soil/Copy of images22(1).jpg
+train/Clay soil/depositphotos_5508133-stock-photo-dry-red-clay-soil-texture.jpg
+train/Clay soil/images22.jpg
+val/Clay soil/Copy of depositphotos_5508133-stock-photo-dry-red-clay-soil-texture(1).jpg
+val/Clay soil/Copy of images22.jpg
+train/Clay soil/Copy of drought-964339_1920(1).jpg
+train/Clay soil/drought-964339_1920.jpg
+val/Clay soil/Copy of drought-964339_1920.jpg
+train/Clay soil/Copy of dry-clay-soil-in-lanzarote-M4A2DW(1).jpg
+train/Clay soil/Copy of dry-clay-soil-in-lanzarote-M4A2DW.jpg
+train/Clay soil/dry-clay-soil-in-lanzarote-M4A2DW.jpg
+train/Clay soil/Copy of e2913e6eff5701c471f4dddbe7f66c92(1).jpg
+train/Clay soil/Copy of e2913e6eff5701c471f4dddbe7f66c92.jpg
+train/Clay soil/e2913e6eff5701c471f4dddbe7f66c92.jpg
+val/Clay soil/Copy of images24(1).jpg
+val/Clay soil/Copy of images24.jpg
+val/Clay soil/images24.jpg
+train/Clay soil/Copy of image6.jpeg
+train/Clay soil/image6.jpeg
+val/Clay soil/Copy of image6(1).jpeg
+train/Clay soil/Copy of images407(1).jpg
+train/Clay soil/Copy of images407.jpg
+train/Clay soil/images407.jpg
+train/Clay soil/Copy of images76(1).jpg
+train/Clay soil/images76.jpg
+val/Clay soil/Copy of images76.jpg
+train/Clay soil/Copy of red-clay-soil-closeup-red-clay-soil-closeup-as-natural-background-98921605.jpg
+train/Clay soil/red-clay-soil-closeup-red-clay-soil-closeup-as-natural-background-98921605.jpg
+train/Clay soil/Copy of red-clay-soil-closeup-red-clay-soil-closeup-as-natural-background-989216052.jpg
+val/Clay soil/red-clay-soil-closeup-red-clay-soil-closeup-as-natural-background-989216052.jpg
+train/Clay soil/arid-clay-soil-sun-desert-260nw-1672414813.jpg
+train/Clay soil/aug_0_1094.jpg
+train/Clay soil/aug_0_1130.jpg
+train/Clay soil/aug_0_1132.jpg
+train/Clay soil/aug_0_1406.jpg
+train/Clay soil/aug_0_143.jpg
+train/Clay soil/aug_0_1480.jpg
+train/Clay soil/aug_0_1566.jpg
+train/Clay soil/aug_0_1589.jpg
+train/Clay soil/aug_0_1817.jpg
+train/Clay soil/aug_0_2056.jpg
+train/Clay soil/aug_0_2308.jpg
+train/Clay soil/aug_0_2379.jpg
+train/Clay soil/aug_0_252.jpg
+train/Clay soil/aug_0_2677.jpg
+train/Clay soil/aug_0_2682.jpg
+train/Clay soil/aug_0_2830.jpg
+train/Clay soil/aug_0_2987.jpg
+train/Clay soil/aug_0_3050.jpg
+train/Clay soil/aug_0_3206.jpg
+train/Clay soil/aug_0_340.jpg
+train/Clay soil/aug_0_354.jpg
+train/Clay soil/aug_0_3581.jpg
+train/Clay soil/aug_0_3675.jpg
+train/Clay soil/aug_0_4075.jpg
+train/Clay soil/aug_0_4113.jpg
+train/Clay soil/aug_0_4146.jpg
+train/Clay soil/aug_0_445.jpg
+train/Clay soil/aug_0_4605.jpg
+train/Clay soil/aug_0_4804.jpg
+train/Clay soil/aug_0_4883.jpg
+train/Clay soil/aug_0_5076.jpg
+train/Clay soil/aug_0_515.jpg
+train/Clay soil/aug_0_5189.jpg
+train/Clay soil/aug_0_5289.jpg
+train/Clay soil/aug_0_5616.jpg
+train/Clay soil/aug_0_5667.jpg
+train/Clay soil/aug_0_5802.jpg
+train/Clay soil/aug_0_6001.jpg
+train/Clay soil/aug_0_6077.jpg
+train/Clay soil/aug_0_6220.jpg
+train/Clay soil/aug_0_6258.jpg
+train/Clay soil/aug_0_6293.jpg
+train/Clay soil/aug_0_6300.jpg
+train/Clay soil/aug_0_6758.jpg
+train/Clay soil/aug_0_6917.jpg
+train/Clay soil/aug_0_7087.jpg
+train/Clay soil/aug_0_7171.jpg
+train/Clay soil/aug_0_7292.jpg
+train/Clay soil/aug_0_736.jpg
+train/Clay soil/aug_0_7636.jpg
+train/Clay soil/aug_0_7710.jpg
+train/Clay soil/aug_0_7737.jpg
+train/Clay soil/aug_0_8046.jpg
+train/Clay soil/aug_0_8078.jpg
+train/Clay soil/aug_0_815.jpg
+train/Clay soil/aug_0_8222.jpg
+train/Clay soil/aug_0_8414.jpg
+train/Clay soil/aug_0_8443.jpg
+train/Clay soil/aug_0_8488.jpg
+train/Clay soil/aug_0_8541.jpg
+train/Clay soil/aug_0_8586.jpg
+train/Clay soil/aug_0_8647.jpg
+train/Clay soil/aug_0_8774.jpg
+train/Clay soil/aug_0_8781.jpg
+train/Clay soil/aug_0_9015.jpg
+train/Clay soil/aug_0_9080.jpg
+train/Clay soil/aug_0_9196.jpg
+train/Clay soil/aug_0_9513.jpg
+train/Clay soil/aug_0_9648.jpg
+train/Clay soil/aug_0_9724.jpg
+train/Clay soil/aug_0_9891.jpg
+train/Clay soil/aug_0_9930.jpg
+train/Clay soil/aug_0_9933.jpg
+train/Clay soil/aug_0_9972.jpg
+train/Clay soil/brown-dry-soil-background-top-260nw-1403550908.jpg
+train/Clay soil/clay-soil-260nw-689186767.jpg
+train/Clay soil/clay-soil-close-up-brown-179039817.jpg
+val/Clay soil/Copy of clay-soil-close-up-brown-179039817.jpg
+train/Clay soil/closeup-photo-sand-soil-real-260nw-1922365577.jpg
+train/Clay soil/cracked-wet-mud-clay-earth-260nw-1724461723.jpg
+train/Clay soil/dried-cracked-earth-soil-ground-260nw-519337915.jpg
+train/Clay soil/earthquake-vector-damage-cracking-holes-260nw-2121218699.jpg
+train/Clay soil/man-working-shovel-clay-260nw-639044377.jpg
+val/Clay soil/Copy of man-working-shovel-clay-260nw-639044377(1).jpg
+val/Clay soil/Copy of man-working-shovel-clay-260nw-639044377.jpg
+train/Clay soil/red-dirt-soil-background-texture-260nw-270084698.jpg
+train/Clay soil/texture-dried-earth-clay-sand-260nw-1344131942.jpg
+train/Clay soil/textures-ground-stones-green-grass-260nw-2093948488.jpg
+train/Inceptisol soil/inceptisol-003.jpg
+train/Inceptisol soil/inceptisol-006.jpg
+train/Inceptisol soil/inceptisol-009.jpg
+train/Inceptisol soil/inceptisol-010.jpg
+train/Inceptisol soil/inceptisol-011.jpg
+train/Inceptisol soil/inceptisol-012.jpg
+train/Inceptisol soil/inceptisol-017.jpg
+train/Inceptisol soil/inceptisol-019.jpg
+train/Inceptisol soil/inceptisol-023.jpg
+train/Inceptisol soil/inceptisol-024.jpg
+train/Inceptisol soil/inceptisol-025.jpg
+train/Inceptisol soil/inceptisol-026.jpg
+train/Inceptisol soil/inceptisol-029.jpg
+train/Inceptisol soil/inceptisol-031.jpg
+train/Inceptisol soil/inceptisol-032.jpg
+train/Inceptisol soil/inceptisol-033.jpg
+train/Inceptisol soil/inceptisol-034.jpg
+train/Inceptisol soil/inceptisol-035.jpg
+train/Inceptisol soil/inceptisol-036.jpg
+train/Inceptisol soil/inceptisol-037.jpg
+train/Inceptisol soil/inceptisol-039.jpg
+train/Inceptisol soil/inceptisol-043.jpg
+train/Inceptisol soil/inceptisol-046.jpg
+train/Inceptisol soil/inceptisol-048.jpg
+train/Inceptisol soil/inceptisol-050.jpg
+train/Inceptisol soil/inceptisol-051.jpg
+train/Inceptisol soil/inceptisol-052.jpg
+train/Inceptisol soil/inceptisol-053.jpg
+train/Inceptisol soil/inceptisol-054.jpg
+train/Inceptisol soil/inceptisol-056.jpg
+train/Inceptisol soil/inceptisol-058.jpg
+train/Inceptisol soil/inceptisol-059.jpg
+train/Inceptisol soil/inceptisol-060.jpg
+train/Inceptisol soil/inceptisol-061.jpg
+train/Inceptisol soil/inceptisol-062.jpg
+train/Inceptisol soil/inceptisol-066.jpg
+train/Inceptisol soil/inceptisol-067.jpg
+train/Inceptisol soil/inceptisol-091.jpg
+train/Inceptisol soil/inceptisol-068.jpg
+train/Inceptisol soil/inceptisol-071.jpg
+train/Inceptisol soil/inceptisol-073.jpg
+train/Inceptisol soil/inceptisol-074.jpg
+train/Inceptisol soil/inceptisol-075.jpg
+train/Inceptisol soil/inceptisol-078.jpg
+train/Inceptisol soil/inceptisol-085.jpg
+train/Inceptisol soil/inceptisol-087.jpg
+train/Inceptisol soil/inceptisol-094.jpg
+train/Inceptisol soil/inceptisol-096.jpg
+train/Inceptisol soil/inceptisol-103.jpg
+train/Inceptisol soil/inceptisol-104.jpg
+train/Inceptisol soil/inceptisol-105.jpg
+train/Inceptisol soil/inceptisol-106.jpg
+train/Inceptisol soil/inceptisol-107.jpg
+train/Inceptisol soil/inceptisol-110.jpg
+train/Laterite soil/1.jpg
+train/Laterite soil/24.jpg
+train/Laterite soil/Laterite_Soil_ (53).jpg
+train/Laterite soil/16.jpg
+train/Laterite soil/Laterite_Soil_ (8).jpg
+train/Laterite soil/18.jpg
+val/Laterite soil/Laterite_Soil_ (10).jpg
+train/Laterite soil/2.jpg
+train/Laterite soil/6.jpg
+train/Laterite soil/Laterite_Soil_ (54).jpg
+train/Laterite soil/Laterite_Soil_ (58).jpg
+train/Laterite soil/20.jpg
+train/Laterite soil/Laterite_Soil_ (12).jpg
+train/Laterite soil/Laterite_Soil_ (59).jpg
+val/Laterite soil/7.jpg
+train/Laterite soil/21.jpg
+train/Laterite soil/Laterite_Soil_ (13).jpg
+train/Laterite soil/3.jpg
+val/Laterite soil/Laterite_Soil_ (55).jpg
+train/Laterite soil/30.jpg
+train/Laterite soil/Laterite_Soil_ (22).jpg
+train/Laterite soil/4.jpg
+train/Laterite soil/Laterite_Soil_ (14).jpg
+train/Laterite soil/Laterite_Soil_ (15).jpg
+val/Laterite soil/23.jpg
+train/Laterite soil/Laterite_Soil_ (18).jpg
+train/Laterite soil/Laterite_Soil_ (21).jpg
+val/Laterite soil/29.jpg
+train/Laterite soil/Laterite_Soil_ (23).jpg
+train/Laterite soil/Laterite_Soil_ (39).jpg
+train/Laterite soil/Laterite_Soil_ (24).jpg
+train/Laterite soil/Laterite_Soil_ (25).jpg
+train/Laterite soil/Laterite_Soil_ (27).jpg
+train/Laterite soil/Laterite_Soil_ (28).jpg
+train/Laterite soil/Laterite_Soil_ (30).jpg
+train/Laterite soil/Laterite_Soil_ (31).jpg
+train/Laterite soil/Laterite_Soil_ (33).jpg
+train/Laterite soil/Laterite_Soil_ (36).jpg
+train/Laterite soil/Laterite_Soil_ (37).jpg
+train/Laterite soil/Laterite_Soil_ (38).jpg
+train/Laterite soil/Laterite_Soil_ (4).jpg
+val/Laterite soil/12.jpg
+train/Laterite soil/Laterite_Soil_ (41).jpg
+train/Laterite soil/Laterite_Soil_ (45).jpg
+train/Laterite soil/Laterite_Soil_ (46).jpg
+train/Laterite soil/Laterite_Soil_ (5).jpg
+val/Laterite soil/13.jpg
+train/Laterite soil/Laterite_Soil_ (50).jpg
+train/Laterite soil/Laterite_Soil_ (60).jpg
+val/Laterite soil/8.jpg
+train/Laterite soil/aug_0_1114.jpg
+train/Laterite soil/aug_0_1560.jpg
+train/Laterite soil/aug_0_1690.jpg
+train/Laterite soil/aug_0_1726.jpg
+train/Laterite soil/aug_0_1935.jpg
+train/Laterite soil/aug_0_255.jpg
+train/Laterite soil/aug_0_2586.jpg
+train/Laterite soil/aug_0_2645.jpg
+train/Laterite soil/aug_0_2668.jpg
+train/Laterite soil/aug_0_279.jpg
+train/Laterite soil/aug_0_3019.jpg
+train/Laterite soil/aug_0_3022.jpg
+train/Laterite soil/aug_0_3148.jpg
+train/Laterite soil/aug_0_3179.jpg
+train/Laterite soil/aug_0_3215.jpg
+train/Laterite soil/aug_0_3266.jpg
+train/Laterite soil/aug_0_3297.jpg
+train/Laterite soil/aug_0_3332.jpg
+train/Laterite soil/aug_0_3701.jpg
+train/Laterite soil/aug_0_3752.jpg
+train/Laterite soil/aug_0_3754.jpg
+train/Laterite soil/aug_0_3934.jpg
+train/Laterite soil/aug_0_4114.jpg
+train/Laterite soil/aug_0_4283.jpg
+train/Laterite soil/aug_0_4301.jpg
+train/Laterite soil/aug_0_4457.jpg
+train/Laterite soil/aug_0_4690.jpg
+train/Laterite soil/aug_0_4937.jpg
+train/Laterite soil/aug_0_4967.jpg
+train/Laterite soil/aug_0_515.jpg
+train/Laterite soil/aug_0_5293.jpg
+train/Laterite soil/aug_0_5363.jpg
+train/Laterite soil/aug_0_5673.jpg
+train/Laterite soil/aug_0_5764.jpg
+train/Laterite soil/aug_0_590.jpg
+train/Laterite soil/aug_0_5998.jpg
+train/Laterite soil/aug_0_6155.jpg
+train/Laterite soil/aug_0_6427.jpg
+train/Laterite soil/aug_0_7096.jpg
+train/Laterite soil/aug_0_7561.jpg
+train/Laterite soil/aug_0_8111.jpg
+train/Laterite soil/aug_0_8139.jpg
+train/Laterite soil/aug_0_8174.jpg
+train/Laterite soil/aug_0_8387.jpg
+train/Laterite soil/aug_0_8405.jpg
+train/Laterite soil/aug_0_8585.jpg
+train/Laterite soil/aug_0_8668.jpg
+train/Laterite soil/aug_0_8686.jpg
+train/Laterite soil/aug_0_8890.jpg
+train/Laterite soil/aug_0_9172.jpg
+train/Laterite soil/aug_0_9180.jpg
+train/Laterite soil/aug_0_9206.jpg
+train/Laterite soil/aug_0_9221.jpg
+train/Laterite soil/aug_0_9267.jpg
+train/Laterite soil/aug_0_9371.jpg
+train/Laterite soil/aug_0_9474.jpg
+train/Laterite soil/aug_0_9489.jpg
+train/Laterite soil/aug_0_959.jpg
+train/Laterite soil/aug_0_9658.jpg
+train/Laterite soil/aug_0_9826.jpg
+train/Laterite soil/aug_0_9891.jpg
+train/Laterite soil/aug_0_9902.jpg
+train/Laterite soil/laterit-006.jpg
+train/Laterite soil/laterit-007.jpg
+train/Laterite soil/laterit-013.jpg
+train/Laterite soil/laterit-014.jpg
+train/Laterite soil/laterit-017.jpg
+train/Laterite soil/laterit-023.jpg
+train/Laterite soil/laterit-024.jpg
+train/Laterite soil/laterit-025.jpg
+train/Laterite soil/laterit-028.jpg
+train/Laterite soil/laterit-029.jpg
+train/Laterite soil/laterit-031.jpg
+train/Laterite soil/laterit-036.jpg
+train/Laterite soil/laterit-040.jpg
+train/Laterite soil/laterit-041.jpg
+train/Laterite soil/laterit-043.jpg
+train/Laterite soil/laterit-044.jpg
+train/Laterite soil/laterit-046.jpg
+train/Laterite soil/laterit-049.jpg
+train/Laterite soil/laterit-050.jpg
+train/Laterite soil/laterit-051.jpg
+train/Laterite soil/laterit-053.jpg
+train/Laterite soil/laterit-054.jpg
+train/Laterite soil/laterit-056.jpg
+train/Laterite soil/laterit-059.jpg
+train/Laterite soil/laterit-060.jpg
+train/Laterite soil/laterit-062.jpg
+train/Laterite soil/laterit-063.jpg
+train/Laterite soil/laterit-064.jpg
+train/Laterite soil/laterit-065.jpg
+train/Laterite soil/laterit-066.jpg
+train/Laterite soil/laterit-069.jpg
+train/Laterite soil/laterit-070.jpg
+train/Laterite soil/laterit-072.jpg
+train/Laterite soil/laterit-073.jpg
+train/Laterite soil/laterit-075.jpg
+train/Laterite soil/laterit-076.jpg
+train/Laterite soil/laterit-078.jpg
+train/Laterite soil/laterit-081.jpg
+train/Laterite soil/laterit-085.jpg
+train/Laterite soil/laterit-086.jpg
+train/Laterite soil/laterit-089.jpg
+train/Laterite soil/laterit-092.jpg
+train/Laterite soil/laterit-095.jpg
+train/Laterite soil/laterit-097.jpg
+train/Laterite soil/laterit-098.jpg
+train/Laterite soil/laterit-100.jpg
+train/Laterite soil/laterit-101.jpg
+train/Laterite soil/laterit-102.jpg
+train/Laterite soil/laterit-103.jpg
+train/Laterite soil/laterit-105.jpg
+train/Laterite soil/laterit-106.jpg
+train/Laterite soil/laterit-109.jpg
+train/Pasir soil/pasir-001.jpg
+train/Pasir soil/pasir-002.jpg
+train/Pasir soil/pasir-007.jpg
+train/Pasir soil/pasir-008.jpg
+train/Pasir soil/pasir-009.jpg
+train/Pasir soil/pasir-010.jpg
+train/Pasir soil/pasir-012.jpg
+train/Pasir soil/pasir-015.jpg
+train/Pasir soil/pasir-017.jpg
+train/Pasir soil/pasir-018.jpg
+train/Pasir soil/pasir-019.jpg
+train/Pasir soil/pasir-022.jpg
+train/Pasir soil/pasir-023.jpg
+val/Pasir soil/pasir-023(1).jpg
+train/Pasir soil/pasir-024.jpg
+train/Pasir soil/pasir-025.jpg
+train/Pasir soil/pasir-026(1).jpg
+val/Pasir soil/pasir-026.jpg
+train/Pasir soil/pasir-028(1).jpg
+train/Pasir soil/pasir-028.jpg
+train/Pasir soil/pasir-038.jpg
+train/Pasir soil/pasir-039.jpg
+train/Pasir soil/pasir-042.jpg
+train/Pasir soil/pasir-043.jpg
+train/Pasir soil/pasir-046.jpg
+train/Pasir soil/pasir-047.jpg
+train/Pasir soil/pasir-048.jpg
+train/Pasir soil/pasir-049.jpg
+train/Pasir soil/pasir-051.jpg
+train/Pasir soil/pasir-052.jpg
+train/Pasir soil/pasir-053.jpg
+train/Pasir soil/pasir-054.jpg
+train/Pasir soil/pasir-057.jpg
+train/Pasir soil/pasir-059.jpg
+train/Pasir soil/pasir-060.jpg
+train/Pasir soil/pasir-063.jpg
+train/Pasir soil/pasir-066.jpg
+train/Pasir soil/pasir-067.jpg
+train/Pasir soil/pasir-069.jpg
+train/Pasir soil/pasir-070.jpg
+train/Pasir soil/pasir-071.jpg
+train/Pasir soil/pasir-073.jpg
+train/Pasir soil/pasir-075.jpg
+train/Pasir soil/pasir-076.jpg
+train/Pasir soil/pasir-077.jpg
+train/Pasir soil/pasir-081.jpg
+train/Pasir soil/pasir-082.jpg
+train/Pasir soil/pasir-084.jpg
+train/Pasir soil/pasir-087.jpg
+train/Pasir soil/pasir-090.jpg
+train/Pasir soil/pasir-093.jpg
+train/Pasir soil/pasir-095.jpg
+train/Pasir soil/pasir-097.jpg
+train/Pasir soil/pasir-098.jpg
+train/Pasir soil/pasir-100.jpg
+train/Pasir soil/pasir-102.jpg
+train/Pasir soil/pasir-103.jpg
+train/Pasir soil/pasir-104.jpg
+train/Pasir soil/pasir-105.jpg
+train/Pasir soil/pasir-107.jpg
+train/Pasir soil/pasir-108.jpg
+train/Pasir soil/pasir-110.jpg
+train/Red soil/1000_F_233167094_JhQz9xvHtlN5UyT3zt748JiJolOSid7s.jpg
+train/Red soil/Copy of 1000_F_233167094_JhQz9xvHtlN5UyT3zt748JiJolOSid7s.jpg
+train/Red soil/Copy of images8.jpg
+train/Red soil/images8.jpg
+train/Red soil/250px-Ultisol.jpg
+train/Red soil/Copy of 250px-Ultisol.jpg
+train/Red soil/Copy of images10.jpg
+train/Red soil/images10.jpg
+train/Red soil/5.jpg
+train/Red soil/Copy of 5.jpg
+train/Red soil/Copy of images171.jpg
+val/Red soil/images171.jpg
+train/Red soil/51em0GmiApL._SX466_.jpg
+train/Red soil/Copy of 51em0GmiApL._SX466_.jpg
+train/Red soil/Copy of image17.jpeg
+train/Red soil/image17.jpeg
+train/Red soil/Copy of 3.jpg
+val/Red soil/3.jpg
+train/Red soil/Copy of Red-soil-essay.jpg
+train/Red soil/Red-soil-essay.jpg
+val/Red soil/Copy of images66.jpg
+val/Red soil/images66.jpg
+train/Red soil/Copy of Sample6.0.jpg
+train/Red soil/Sample6.0.jpg
+train/Red soil/Copy of Sample6.150.jpg
+train/Red soil/Sample6.150.jpg
+train/Red soil/Copy of Sample6.180.jpg
+train/Red soil/Sample6.180.jpg
+train/Red soil/Copy of Sample8.0.jpg
+train/Red soil/Sample8.0.jpg
+train/Red soil/Copy of Sample8.120.jpg
+train/Red soil/Sample8.120.jpg
+train/Red soil/Copy of Sample8.150.jpg
+train/Red soil/Sample8.150.jpg
+train/Red soil/Copy of Sample8.30.jpg
+val/Red soil/Sample8.30.jpg
+train/Red soil/Copy of Sample8.60.jpg
+train/Red soil/Sample8.60.jpg
+train/Red soil/Copy of Sample8.90.jpg
+train/Red soil/Sample8.90.jpg
+train/Red soil/Copy of brown-soil.jpg
+train/Red soil/Copy of images96.jpg
+train/Red soil/brown-soil.jpg
+train/Red soil/Copy of download (2).jpg
+train/Red soil/Copy of image31.jpeg
+train/Red soil/image31.jpeg
+train/Red soil/Copy of download.jpg
+train/Red soil/Red_4.jpg
+train/Red soil/image12.jpeg
+val/Red soil/Copy of image12.jpeg
+train/Red soil/Copy of image.jpeg
+train/Red soil/Red_46.jpg
+train/Red soil/image.jpeg
+train/Red soil/Copy of image16.jpeg
+train/Red soil/image16.jpeg
+train/Red soil/Copy of image19.jpeg
+train/Red soil/image19.jpeg
+train/Red soil/Copy of image24.jpeg
+train/Red soil/Copy of utkl.jpg
+train/Red soil/image24.jpeg
+train/Red soil/utkl.jpg
+train/Red soil/Copy of image25.jpeg
+train/Red soil/image25.jpeg
+train/Red soil/Copy of image26.jpeg
+train/Red soil/Red_42.jpg
+train/Red soil/image26.jpeg
+train/Red soil/Copy of image30.jpeg
+train/Red soil/image30.jpeg
+train/Red soil/Copy of images (1).jpg
+train/Red soil/Copy of images102.jpg
+train/Red soil/Copy of images104.jpg
+train/Red soil/Copy of images117.jpg
+train/Red soil/Copy of images12.jpg
+train/Red soil/images12.jpg
+train/Red soil/Copy of images120.jpg
+train/Red soil/Copy of images122.jpg
+train/Red soil/Copy of red-soil-500x5002.jpg
+train/Red soil/red-soil-500x5002.jpg
+train/Red soil/Copy of images125.jpg
+train/Red soil/Copy of images127.jpg
+val/Red soil/images127.jpg
+train/Red soil/Copy of images13.jpg
+train/Red soil/images13.jpg
+train/Red soil/Copy of images131.jpg
+train/Red soil/Copy of images134.jpg
+train/Red soil/images134.jpg
+train/Red soil/Copy of images139.jpg
+val/Red soil/images139.jpg
+train/Red soil/Copy of images156.jpg
+val/Red soil/images156.jpg
+train/Red soil/Copy of images160.jpg
+train/Red soil/images160.jpg
+train/Red soil/Copy of images162.jpg
+train/Red soil/images162.jpg
+train/Red soil/Copy of images165.jpg
+train/Red soil/images165.jpg
+train/Red soil/Copy of images176.jpg
+train/Red soil/Copy of red20clay-700x700.jpg
+train/Red soil/images176.jpg
+train/Red soil/red20clay-700x700.jpg
+train/Red soil/Copy of images177.jpg
+val/Red soil/images177.jpg
+train/Red soil/Copy of images183.jpg
+train/Red soil/images183.jpg
+train/Red soil/Copy of images19.jpg
+train/Red soil/images19.jpg
+train/Red soil/Copy of images191.jpg
+train/Red soil/images191.jpg
+train/Red soil/Copy of images192.jpg
+train/Red soil/Red_40.jpg
+train/Red soil/image3.jpeg
+train/Red soil/images192.jpg
+val/Red soil/Copy of image3.jpeg
+train/Red soil/Copy of images20.jpg
+train/Red soil/Nc-red-clay-soil-2.jpg
+train/Red soil/images20.jpg
+val/Red soil/Copy of Nc-red-clay-soil-2.jpg
+train/Red soil/Copy of images36.jpg
+train/Red soil/images36.jpg
+train/Red soil/Copy of images37.jpg
+train/Red soil/images37.jpg
+train/Red soil/Copy of images43.jpg
+train/Red soil/Copy of images46.jpg
+train/Red soil/images46.jpg
+train/Red soil/Copy of images6.jpg
+train/Red soil/images6.jpg
+train/Red soil/Copy of images68.jpg
+train/Red soil/Red_5.jpg
+train/Red soil/images68.jpg
+train/Red soil/Copy of images71.jpg
+train/Red soil/images71.jpg
+train/Red soil/Copy of images78.jpg
+train/Red soil/Copy of red3.jpg
+train/Red soil/images78.jpg
+train/Red soil/red3.jpg
+train/Red soil/Red_1.jpg
+train/Red soil/Red_10.jpg
+train/Red soil/Red_12.jpg
+train/Red soil/Red_18.jpg
+train/Red soil/Red_19.jpg
+train/Red soil/Red_2.jpg
+train/Red soil/Red_20.jpg
+train/Red soil/Red_21.jpg
+train/Red soil/Red_24.jpg
+train/Red soil/Red_29.jpg
+train/Red soil/Red_3.jpg
+train/Red soil/Red_32.jpg
+train/Red soil/Red_35.jpg
+train/Red soil/Red_37.jpg
+train/Red soil/Red_43.jpg
+train/Red soil/Red_44.jpg
+train/Red soil/Red_6.jpg
+train/Red soil/Red_7.jpg
+train/Red soil/Red_8.jpg
+train/Red soil/Red_9.jpg
+train/Red soil/Sample6.60.jpg
+val/Red soil/Copy of Sample6.60.jpg
+train/Red soil/Sample6.90.jpg
+val/Red soil/Copy of Sample6.90.jpg
+train/Red soil/image2.jpeg
+val/Red soil/Copy of image2.jpeg
+train/Red soil/images137.jpg
+val/Red soil/Copy of images137.jpg
+train/Red soil/images143.jpg
+val/Red soil/Copy of images143.jpg
+train/Red soil/images16.jpg
+val/Red soil/Copy of images16.jpg
+train/Red soil/images168.jpg
+val/Red soil/Copy of images168.jpg
+train/Red soil/images195.jpg
+val/Red soil/Copy of images195.jpg
+val/Alluvial soil/Alluvial_29.jpg
+val/Alluvial soil/Alluvial_45.jpg
+val/Alluvial soil/Copy of 01060602previewen-02d.jpg
+val/Alluvial soil/Copy of Sample10.0.jpg
+val/Alluvial soil/Copy of Sample10.150.jpg
+val/Alluvial soil/Copy of Sample13.120.jpg
+val/Alluvial soil/Sample13.120.jpg
+val/Alluvial soil/Copy of Sample9.150.jpg
+val/Alluvial soil/Copy of image (2).jpeg
+val/Alluvial soil/image (2).jpeg
+val/Alluvial soil/OIP.lf-P9Z4OogePsv6aa0-cFQHaFT.jpg
+val/Alluvial soil/aug_0_1482.jpg
+val/Alluvial soil/aug_0_1769.jpg
+val/Alluvial soil/aug_0_2693.jpg
+val/Alluvial soil/aug_0_3616.jpg
+val/Alluvial soil/aug_0_4718.jpg
+val/Alluvial soil/aug_0_6849.jpg
+val/Alluvial soil/aug_0_7202.jpg
+val/Alluvial soil/aug_0_7705.jpg
+val/Alluvial soil/aug_0_7958.jpg
+val/Alluvial soil/image5.jpeg
+val/Alluvial soil/image8.jpeg
+val/Alluvial soil/river-alluvial-silt-260nw-1055516195.jpg
+val/Andosol/andosol-003.jpg
+val/Andosol/andosol-014.jpg
+val/Andosol/andosol-020.jpg
+val/Andosol/andosol-047.jpg
+val/Andosol/andosol-049.jpg
+val/Andosol/andosol-053.jpg
+val/Andosol/andosol-055.jpg
+val/Andosol/andosol-061.jpg
+val/Andosol/andosol-064.jpg
+val/Andosol/andosol-074.jpg
+val/Andosol/andosol-089.jpg
+val/Andosol/andosol-095.jpg
+val/Andosol/andosol-107.jpg
+val/Andosol/andosol-110.jpg
+val/Black soil/27.jpg
+val/Black soil/Black_Soil_ (45).jpg
+val/Black soil/Black_17.jpg
+val/Black soil/Black_18.jpg
+val/Black soil/Black_28.jpg
+val/Black soil/Black_35.jpg
+val/Black soil/Black_40.jpg
+val/Black soil/Black_7.jpg
+val/Black soil/Black_Soil_ (1).jpg
+val/Black soil/Black_Soil_ (10).jpg
+val/Black soil/Black_Soil_ (17).jpg
+val/Black soil/Black_Soil_ (23).jpg
+val/Black soil/Black_Soil_ (5).jpg
+val/Black soil/Black_Soil_ (71).jpg
+val/Black soil/Copy of images427(1).jpg
+val/Black soil/Copy of images427.jpg
+val/Black soil/black-land-plant-isolated-on-260nw-1931330783.jpg
+val/Black soil/black-sand-beach-macro-photography-260nw-1598238682.jpg
+val/Black soil/black-soil-plowed-field-earth-260nw-796045561.jpg
+val/Black soil/closeup-plowed-field-fertile-black-600w-1831062274.jpg
+val/Black soil/footprint-on-ground-soil-green-260nw-1989753302.jpg
+val/Black soil/fresh-green-sprouts-maize-spring-260nw-640948591.jpg
+val/Black soil/soil-surface-background-260nw-141203386.jpg
+val/Clay soil/Clay_1.jpg
+val/Clay soil/Clay_13.jpg
+val/Clay soil/Clay_20.jpg
+val/Clay soil/Clay_23.jpg
+val/Clay soil/Clay_9.jpg
+val/Clay soil/Copy of 1523893451317.jpeg
+val/Clay soil/Copy of Sample12.150.jpg
+val/Clay soil/Copy of Sample12.90.jpg
+val/Clay soil/Copy of clay-soil-field.jpg
+val/Clay soil/clay-soil-field.jpg
+val/Clay soil/aug_0_1029.jpg
+val/Clay soil/aug_0_1197.jpg
+val/Clay soil/aug_0_1218.jpg
+val/Clay soil/aug_0_1297.jpg
+val/Clay soil/aug_0_1960.jpg
+val/Clay soil/aug_0_3201.jpg
+val/Clay soil/aug_0_3980.jpg
+val/Clay soil/aug_0_5384.jpg
+val/Clay soil/aug_0_7428.jpg
+val/Clay soil/aug_0_7581.jpg
+val/Clay soil/aug_0_8037.jpg
+val/Clay soil/aug_0_8437.jpg
+val/Clay soil/aug_0_8478.jpg
+val/Clay soil/aug_0_8606.jpg
+val/Clay soil/aug_0_8804.jpg
+val/Clay soil/aug_0_9287.jpg
+val/Clay soil/backdrop-thick-viscous-slippery-tracks-260nw-542119996.jpg
+val/Clay soil/cracked-clay-winter-ground-typical-260nw-2134601235.jpg
+val/Clay soil/crosssection-pavement-layers-clay-sand-260nw-1235206921.jpg
+val/Clay soil/global-warming-concept-dry-cracks-260nw-1730488078.jpg
+val/Clay soil/golden-crack-earth-dry-ground-260nw-532903036.jpg
+val/Clay soil/red-soil-earth-texture-background-260nw-1181471485.jpg
+val/Inceptisol soil/inceptisol-013.jpg
+val/Inceptisol soil/inceptisol-014.jpg
+val/Inceptisol soil/inceptisol-021.jpg
+val/Inceptisol soil/inceptisol-027.jpg
+val/Inceptisol soil/inceptisol-038.jpg
+val/Inceptisol soil/inceptisol-040.jpg
+val/Inceptisol soil/inceptisol-045.jpg
+val/Inceptisol soil/inceptisol-055.jpg
+val/Inceptisol soil/inceptisol-057.jpg
+val/Inceptisol soil/inceptisol-086.jpg
+val/Inceptisol soil/inceptisol-088.jpg
+val/Inceptisol soil/inceptisol-093.jpg
+val/Laterite soil/Laterite_Soil_ (20).jpg
+val/Laterite soil/Laterite_Soil_ (29).jpg
+val/Laterite soil/Laterite_Soil_ (40).jpg
+val/Laterite soil/Laterite_Soil_ (43).jpg
+val/Laterite soil/Laterite_Soil_ (48).jpg
+val/Laterite soil/Laterite_Soil_ (51).jpg
+val/Laterite soil/aug_0_1035.jpg
+val/Laterite soil/aug_0_3096.jpg
+val/Laterite soil/aug_0_3749.jpg
+val/Laterite soil/aug_0_4023.jpg
+val/Laterite soil/aug_0_486.jpg
+val/Laterite soil/aug_0_5955.jpg
+val/Laterite soil/aug_0_6240.jpg
+val/Laterite soil/aug_0_6506.jpg
+val/Laterite soil/aug_0_697.jpg
+val/Laterite soil/aug_0_6999.jpg
+val/Laterite soil/aug_0_7431.jpg
+val/Laterite soil/aug_0_7443.jpg
+val/Laterite soil/aug_0_96.jpg
+val/Laterite soil/laterit-001.jpg
+val/Laterite soil/laterit-002.jpg
+val/Laterite soil/laterit-009.jpg
+val/Laterite soil/laterit-019.jpg
+val/Laterite soil/laterit-021.jpg
+val/Laterite soil/laterit-026.jpg
+val/Laterite soil/laterit-032.jpg
+val/Laterite soil/laterit-039.jpg
+val/Laterite soil/laterit-048.jpg
+val/Laterite soil/laterit-061.jpg
+val/Laterite soil/laterit-082.jpg
+val/Laterite soil/laterit-094.jpg
+val/Pasir soil/pasir-005.jpg
+val/Pasir soil/pasir-006.jpg
+val/Pasir soil/pasir-058.jpg
+val/Pasir soil/pasir-061.jpg
+val/Pasir soil/pasir-062.jpg
+val/Pasir soil/pasir-072.jpg
+val/Pasir soil/pasir-085.jpg
+val/Pasir soil/pasir-088.jpg
+val/Pasir soil/pasir-092.jpg
+val/Pasir soil/pasir-094.jpg
+val/Pasir soil/pasir-096.jpg
+val/Pasir soil/pasir-099.jpg
+val/Pasir soil/pasir-109.jpg
+val/Red soil/Copy of Sample6.120.jpg
+val/Red soil/Sample6.120.jpg
+val/Red soil/Copy of image20.jpeg
+val/Red soil/Copy of image5.jpeg
+val/Red soil/image20.jpeg
+val/Red soil/image5.jpeg
+val/Red soil/Copy of images135.jpg
+val/Red soil/Red_11.jpg
+val/Red soil/Red_13.jpg
+val/Red soil/Red_14.jpg
+val/Red soil/Red_17.jpg
+val/Red soil/Red_22.jpg
+val/Red soil/Red_23.jpg
+val/Red soil/Red_27.jpg
+val/Red soil/Red_28.jpg
+val/Red soil/Red_30.jpg
+val/Red soil/Red_45.jpg
